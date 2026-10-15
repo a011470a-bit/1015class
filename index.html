@@ -1,437 +1,977 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>提示詞庫工作台｜行政通用作業</title>
-<meta name="description" content="46 套工作提示詞，填入自己的資料後可直接修改全文、複製與下載。">
-<meta property="og:title" content="提示詞庫工作台｜行政通用作業">
-<meta property="og:description" content="46 套工作提示詞，填入自己的資料後可直接修改全文、複製與下載。">
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://nungyixia.com/courses/gen-ai-140h/part2/admin-prompt-workbench.html">
-<meta property="og:image" content="https://nungyixia.com/_assets/og-default.png">
-<link rel="canonical" href="https://nungyixia.com/courses/gen-ai-140h/part2/admin-prompt-workbench.html">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="提示詞庫工作台｜行政通用作業">
-<meta name="twitter:description" content="46 套工作提示詞，填入自己的資料後可直接修改全文、複製與下載。">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --c-bg:#f5f3ee;--c-card:#ffffff;--c-border:#d8d4cb;--c-border-strong:#bcb4a4;
-  --c-text:#2c2c2c;--c-mute:#8a8278;--c-faint:#a8a193;
-  --c-accent:#c9963a;--c-accent-soft:#f1e3c3;--c-accent-deep:#9f7322;
-  --c-tag-bg:#efeae0;--c-success:#5a7a5a;--c-success-soft:#e3ebe0;
-  --radius:6px;--radius-lg:10px;
-}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;background:var(--c-bg);color:var(--c-text);font-family:"Noto Sans TC",sans-serif;font-weight:400;line-height:1.7;font-feature-settings:"palt"}
-button,input,textarea,select{font-family:inherit;color:inherit}
-a{color:var(--c-accent-deep);text-decoration:none}a:hover{text-decoration:underline}
-.skip-link{position:absolute;left:-9999px;top:0;background:var(--c-text);color:#fff;padding:8px 14px;border-radius:0 0 6px 0;z-index:1000}
-.skip-link:focus{left:0}
-:focus-visible{outline:2px solid var(--c-accent);outline-offset:2px;border-radius:4px}
-
-.page{max-width:1280px;margin:0 auto;padding:48px 32px 80px}
-
-.hero{border-bottom:1px solid var(--c-border);padding-bottom:32px;margin-bottom:36px}
-.hero-eyebrow{font-size:12px;letter-spacing:3px;color:var(--c-accent-deep);text-transform:uppercase;font-weight:500;margin-bottom:14px}
-.hero h1{font-family:"Shippori Mincho",serif;font-weight:700;font-size:42px;line-height:1.2;margin:0 0 14px;color:var(--c-text);letter-spacing:1px}
-.hero h1 em{font-style:normal;background:var(--c-accent-soft);padding:0 6px;border-radius:3px}
-.hero-sub{font-size:15px;color:var(--c-mute);max-width:780px;line-height:1.9}
-.hero-howto{margin-top:18px;padding:16px 20px;background:var(--c-card);border:1px solid var(--c-border);border-left:3px solid var(--c-accent);border-radius:var(--radius);font-size:13.5px;line-height:1.95;color:var(--c-text)}
-.hero-howto b{color:var(--c-accent-deep);font-weight:500;letter-spacing:.5px}
-.hero-meta{display:flex;gap:24px;margin-top:22px;font-size:13px;color:var(--c-faint);flex-wrap:wrap}
-.hero-meta strong{color:var(--c-text);font-weight:500;letter-spacing:.5px}
-
-.controls{display:flex;flex-direction:column;gap:18px;margin-bottom:28px}
-.search-wrap{position:relative}
-.search-wrap input{width:100%;padding:14px 18px 14px 48px;font-size:15px;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);outline:none;transition:border-color .15s ease}
-.search-wrap input:focus{border-color:var(--c-accent)}
-.search-wrap::before{content:"";position:absolute;left:18px;top:50%;width:18px;height:18px;transform:translateY(-50%);background:no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a8278' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='7'/><line x1='21' y1='21' x2='16.65' y2='16.65'/></svg>")}
-.search-clear{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--c-mute);font-size:18px;cursor:pointer;padding:6px;line-height:1;border-radius:50%;display:none}
-.search-clear:hover{background:var(--c-tag-bg)}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.filter-label{font-size:12px;color:var(--c-mute);letter-spacing:1.5px;margin-right:6px;font-weight:500}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:13px;background:var(--c-card);border:1px solid var(--c-border);color:var(--c-text);border-radius:99px;cursor:pointer;transition:background .15s ease,border-color .15s ease;letter-spacing:.5px}
-.chip:hover{background:#fafaf6;border-color:var(--c-border-strong)}
-.chip.active{background:var(--c-text);color:#fff;border-color:var(--c-text)}
-.chip .count{font-size:11px;opacity:.6}.chip.active .count{opacity:.8}
-
-.stats{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--c-mute);margin-bottom:18px;padding-bottom:12px;border-bottom:1px dashed var(--c-border);flex-wrap:wrap;gap:10px}
-.stats strong{color:var(--c-text);font-weight:500}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.p-btn{text-align:left;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:background .15s ease,border-color .15s ease;position:relative;font-family:inherit}
-.p-btn:hover{background:#fefdfa;border-color:var(--c-accent)}
-.p-btn-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
-.p-btn-topic{font-size:11px;letter-spacing:1.5px;color:var(--c-accent-deep);font-weight:500;display:inline-flex;align-items:center;gap:6px}
-.p-btn-topic .dot{width:6px;height:6px;border-radius:50%;background:var(--c-accent)}
-.p-btn-title{font-family:"Shippori Mincho",serif;font-weight:700;font-size:16px;line-height:1.45;color:var(--c-text);margin:0;letter-spacing:.3px}
-.p-btn-use{font-size:12.5px;color:var(--c-mute);line-height:1.7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.p-btn-meta{display:flex;gap:10px;font-size:11.5px;color:var(--c-mute);margin-top:4px;letter-spacing:.3px}
-.p-btn-meta b{color:var(--c-accent-deep);font-weight:500}
-.p-btn-meta .pill{display:inline-flex;align-items:center;gap:4px}
-.p-btn-arrow{position:absolute;right:18px;bottom:14px;color:var(--c-faint);font-size:14px;transition:color .2s ease}
-.p-btn:hover .p-btn-arrow{color:var(--c-accent)}
-.empty{text-align:center;padding:64px 32px;color:var(--c-mute)}
-.empty h3{font-family:"Shippori Mincho",serif;font-weight:500;font-size:22px;color:var(--c-text);margin:0 0 8px}
-
-.modal-mask{position:fixed;inset:0;background:rgba(28,28,28,.55);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
-.modal-mask.open{display:flex;animation:fadeIn .2s ease}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.builder{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius-lg);max-width:1180px;width:100%;max-height:94vh;display:flex;flex-direction:column;overflow:hidden;animation:slideUp .25s ease}
-@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-.builder-head{padding:22px 28px 18px;border-bottom:1px solid var(--c-border);position:relative;flex-shrink:0;background:#fafaf6}
-.builder-eyebrow{font-size:11px;letter-spacing:2px;color:var(--c-accent-deep);text-transform:uppercase;font-weight:500;margin-bottom:6px}
-.builder-title{font-family:"Shippori Mincho",serif;font-weight:700;font-size:22px;line-height:1.35;margin:0;color:var(--c-text);padding-right:48px;letter-spacing:.5px}
-.builder-meta{display:flex;gap:14px;margin-top:10px;flex-wrap:wrap;font-size:12px;color:var(--c-mute);align-items:center}
-.builder-meta .meta-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;background:var(--c-tag-bg);border-radius:99px}
-.builder-close{position:absolute;top:18px;right:20px;background:none;border:none;width:34px;height:34px;border-radius:50%;cursor:pointer;color:var(--c-mute);font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .15s ease,color .15s ease}
-.builder-close:hover{background:var(--c-tag-bg);color:var(--c-text)}
-.builder-body{display:grid;grid-template-columns:1fr 1fr;gap:0;overflow:hidden;flex:1;min-height:0}
-.builder-col{padding:22px 26px;overflow-y:auto;display:block}
-.builder-col > * + *{margin-top:14px}
-.builder-col.left{border-right:1px solid var(--c-border);background:#fafaf6}
-.col-label{font-size:11px;letter-spacing:2px;color:var(--c-mute);text-transform:uppercase;font-weight:500;display:flex;justify-content:space-between;align-items:center}
-.col-label .hint{font-size:11px;color:var(--c-faint);text-transform:none;letter-spacing:.3px}
-.template-box{background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);padding:18px 20px;font-family:"JetBrains Mono","Noto Sans TC",monospace;font-size:13.5px;line-height:1.95;color:var(--c-text);white-space:pre-wrap;word-break:break-word;letter-spacing:.3px;max-height:280px;overflow-y:auto}
-.ph-mark{display:inline-block;background:var(--c-accent-soft);color:var(--c-accent-deep);padding:1px 7px;border-radius:4px;font-size:12.5px;font-weight:500;cursor:pointer;border:1px solid transparent;transition:border-color .15s ease,background .15s ease;letter-spacing:.3px}
-.ph-mark:hover{background:#e8d4a3;border-color:var(--c-accent)}
-.ph-mark.filled{background:var(--c-success-soft);color:var(--c-success);border:1px dashed var(--c-success)}
-.ph-mark.passthrough{background:transparent;color:var(--c-mute);padding:0;cursor:default;font-weight:400;border:none}
-.ph-mark.passthrough:hover{background:transparent;border:none}
-.fields-list{display:flex;flex-direction:column;gap:14px;margin-top:8px}
-.field-group{display:flex;flex-direction:column;gap:6px}
-.field-label{font-size:12.5px;color:var(--c-text);letter-spacing:.5px;font-weight:500;display:flex;align-items:center;gap:8px}
-.field-label .num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;background:var(--c-accent);color:#fff;border-radius:50%;font-size:10px;font-weight:600}
-.field-input,.field-textarea,.field-select{width:100%;padding:10px 13px;font-size:14px;background:var(--c-card);border:1px solid var(--c-border);border-radius:var(--radius);outline:none;color:var(--c-text);transition:border-color .15s ease;font-family:"Noto Sans TC",sans-serif}
-.field-input:focus,.field-textarea:focus,.field-select:focus{border-color:var(--c-accent)}
-.field-textarea{resize:vertical;min-height:90px;line-height:1.75;font-family:"JetBrains Mono","Noto Sans TC",monospace;font-size:13px}
-.field-input::placeholder,.field-textarea::placeholder{color:var(--c-faint)}
-.no-fields{padding:24px;text-align:center;color:var(--c-mute);font-size:13px;background:var(--c-card);border:1px dashed var(--c-border);border-radius:var(--radius)}
-.no-fields b{color:var(--c-success);display:block;margin-bottom:6px;font-size:14px}
-.result-box{background:#1e1d1a;color:#f0ece4;border-radius:var(--radius);padding:18px 20px;font-family:"JetBrains Mono","Noto Sans TC",monospace;font-size:13.5px;line-height:1.95;white-space:pre-wrap;word-break:break-word;letter-spacing:.3px;max-height:60vh;overflow-y:auto;border:1px solid #2c2a26;margin:0}
-.builder-foot{padding:14px 26px;border-top:1px solid var(--c-border);display:flex;justify-content:space-between;align-items:center;gap:12px;background:#fafaf6;flex-wrap:wrap;flex-shrink:0}
-.foot-info{font-size:12px;color:var(--c-mute);letter-spacing:.5px}
-.foot-info b{color:var(--c-text)}
-.foot-actions{display:flex;gap:8px;flex-wrap:wrap}
-.btn{padding:9px 16px;border-radius:var(--radius);font-size:13px;cursor:pointer;border:1px solid var(--c-border);background:var(--c-card);color:var(--c-text);letter-spacing:.5px;display:inline-flex;align-items:center;gap:6px;transition:background .15s ease,border-color .15s ease;font-weight:500}
-.btn:hover{border-color:var(--c-accent)}.btn svg{width:14px;height:14px}
-.btn-primary{background:var(--c-text);color:#fff;border-color:var(--c-text)}
-.btn-primary:hover{background:#000;border-color:#000}
-.btn-primary.copied{background:var(--c-success);border-color:var(--c-success)}
-.btn-ghost{background:none;color:var(--c-mute);border-color:transparent}
-.btn-ghost:hover{color:var(--c-text);background:var(--c-tag-bg);border-color:var(--c-tag-bg)}
-.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--c-text);color:#fff;padding:12px 24px;border-radius:var(--radius);font-size:13px;letter-spacing:.5px;opacity:0;transition:transform .25s ease,opacity .25s ease;z-index:200;display:flex;align-items:center;gap:8px;border:1px solid #1a1a1a}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}.toast svg{width:16px;height:16px}
-.nav-footer{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:64px;padding-top:24px;border-top:1px solid var(--c-border);flex-wrap:wrap}
-.nav-footer a{font-size:13px;color:var(--c-mute);letter-spacing:.5px;padding:8px 14px;border-radius:var(--radius);border:1px solid transparent;transition:border-color .15s ease,color .15s ease}
-.nav-footer a:hover{color:var(--c-text);border-color:var(--c-border)}
-.foot{margin-top:32px;padding-top:24px;border-top:1px solid var(--c-border);font-size:12px;color:var(--c-faint);text-align:center;letter-spacing:.5px;line-height:2}
-@media (max-width:960px){.builder-body{grid-template-columns:1fr}.builder-col.left{border-right:none;border-bottom:1px solid var(--c-border)}}
-@media (max-width:700px){.page{padding:32px 20px 64px}.hero h1{font-size:30px}.grid{grid-template-columns:1fr;gap:12px}.builder-head,.builder-col,.builder-foot{padding-left:18px;padding-right:18px}.builder-title{font-size:19px}.modal-mask{padding:10px}}
-
-/* Editable prompt result and preparation guidance. */
-.result-box{display:block;width:100%;height:48vh;min-height:320px;max-height:none;resize:vertical;font-family:"JetBrains Mono","Noto Sans TC",monospace;outline-offset:3px}
-.edit-status,.save-status,.preparation{font-size:12px;line-height:1.8;color:var(--c-mute);overflow-wrap:anywhere}
-.preparation{padding:12px 14px;background:var(--c-accent-soft);color:var(--c-text);border-radius:var(--radius)}
-.field-label small{font-size:11px;color:var(--c-mute);font-weight:400}
-.ph-mark{font-family:inherit;line-height:inherit}
-.toast{max-width:calc(100vw - 32px);width:max-content;pointer-events:none}
-[hidden]{display:none!important}
-@media(max-width:960px){.builder-body{display:block;overflow-y:auto}.builder-col{overflow:visible}.result-box{height:400px;min-height:300px}.builder-foot{gap:8px}.foot-actions{width:100%}}
-@media(max-width:430px){.builder-head,.builder-col,.builder-foot{padding-left:14px;padding-right:14px}.foot-actions .btn{font-size:12px;padding:8px 10px}.builder-title{font-size:18px}.result-box{font-size:13px}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>互動式採購申請流程圖產生器</title>
+    <!-- Tailwind CSS for modern responsive styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        muji: {
+                            wine: '#7F2629',       // MUJI signature deep burgundy / wine red
+                            wineDark: '#621B1E',   // Darker tone for hover
+                            wineLight: '#A23B3E',  // Lighter tone for accents
+                            cream: '#F7F5F0',      // Soft natural background
+                            surface: '#FAF9F5',    // Card / section surface
+                            border: '#E5E0D8',     // Muted warm border
+                            text: '#2D2B2A',       // Natural black/dark gray body text
+                            subtext: '#736E69',    // Muted charcoal subtext
+                            chip: '#EFECE6'        // Soft neutral chip background
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #F7F5F0;
+            color: #2D2B2A;
+        }
+        /* Custom scrollbar for editors and tables */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F7F5F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D8D2C7;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B5AD9E;
+        }
+        .node-box {
+            transition: all 0.2s ease-in-out;
+        }
+        .node-box:hover {
+            filter: brightness(0.97);
+        }
+        /* Focus styles for accessibility */
+        button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .focusable-node:focus-visible {
+            outline: 2px solid #7F2629;
+            outline-offset: 2px;
+        }
+    </style>
 </head>
-<body>
-<a href="#main" class="skip-link">跳到主內容</a>
-<main id="main" class="page">
-
-  <header class="hero">
-    <div class="hero-eyebrow">PROMPT WORKBENCH · ADMIN & GENERAL OFFICE</div>
-    <h1>行政通用作業 · <em>提示詞庫工作台</em></h1>
-    <p class="hero-sub">整合行政、助理、企劃與 PM常用任務，共 46 套提示詞。填入自己的工作資料，合併後可直接調整全文，再複製或下載。附件任務與接續對話都有使用前提示，可另存 HTML 離線使用。</p>
-    <div class="hero-howto">
-      <b>怎麼用：</b>① 搜尋或選主題　② 開啟工作台並依提示準備資料　③ 填寫必要欄位　④ 在右側調整完整提示詞　⑤ 複製或下載。全文修改後再改欄位，需按「套用最新欄位」才會重新合併。
-    </div>
-    <div class="hero-meta">
-      <span><strong>46</strong>＿套提示詞</span>
-      <span><strong>8</strong>＿個主題分類</span>
-      <span><strong>97</strong>＿個可填寫欄位</span>
-    </div>
-  </header>
-
-  <section class="controls">
-    <div class="search-wrap">
-      <input id="search" type="text" placeholder="搜尋提示詞內容、主題、標題…（按 / 鍵快速聚焦）" autocomplete="off">
-      <button class="search-clear" id="searchClear" aria-label="清除搜尋">×</button>
-    </div>
-    <div class="filter-row" id="topicFilter">
-      <span class="filter-label">主題</span>
-    </div>
-  </section>
-
-  <div class="stats">
-    <div>顯示中 <strong id="visibleCount">0</strong> / 共 <strong id="allCount">0</strong> 套提示詞</div>
-    <div>選任務、填自己的資料、直接修改全文</div>
-  </div>
-
-  <div id="grid" class="grid"></div>
-  <div id="empty" class="empty" style="display:none">
-    <h3>沒有符合條件的提示詞</h3>
-    <p>試試清除篩選或換個關鍵字。</p>
-  </div>
-
-  <nav class="nav-footer" aria-label="頁面導覽">
-    <a href="../index.html">← 回課程首頁</a>
-    <a href="#main">回頁面頂部 ↑</a>
-  </nav>
-
-  <footer class="foot" data-platform-version="2026-05-20" data-built-at="2026-10-12">
-    弄一下工作室 · 提示詞工作台 · 可右鍵另存新檔離線使用
-  </footer>
-</main>
-
-<div class="modal-mask" id="modalMask" aria-hidden="true">
-  <div class="builder" role="dialog" aria-modal="true" aria-labelledby="builderTitle">
-    <div class="builder-head">
-      <div class="builder-eyebrow" id="builderEyebrow"></div>
-      <h2 class="builder-title" id="builderTitle"></h2>
-      <div class="builder-meta" id="builderMeta"></div>
-      <button class="builder-close" id="builderClose" aria-label="關閉">×</button>
-    </div>
-    <div class="builder-body">
-      <div class="builder-col left">
-        <p class="preparation" id="preparation" hidden></p>
-        <div class="col-label">原始模板 <span class="hint">點高亮空格跳到對應欄位</span></div>
-        <div class="template-box" id="templateBox"></div>
-        <div class="col-label" style="margin-top:8px">填寫欄位 <span class="hint" id="fieldCountHint"></span></div>
-        <div class="fields-list" id="fieldsList"></div>
-      </div>
-      <div class="builder-col right">
-        <div class="col-label">目前提示詞 · 可直接編輯 <span class="hint">複製與下載使用目前文字</span></div>
-        <textarea class="result-box" id="resultBox" aria-label="目前提示詞，可直接編輯" spellcheck="false"></textarea>
-        <p class="edit-status" id="editStatus" role="status" aria-live="polite"></p>
-        <p class="save-status" id="saveStatus" role="status" aria-live="polite"></p>
-        <div class="col-label" style="margin-top:8px">必要欄位填寫進度 <span class="hint" id="progressHint">0 / 0</span></div>
-        <div style="height:6px;background:var(--c-tag-bg);border-radius:99px;overflow:hidden">
-          <div id="progressFill" style="height:100%;width:0%;background:var(--c-accent);transition:width .25s ease"></div>
+<body class="min-h-screen flex flex-col bg-muji-cream text-muji-text">
+    <header class="bg-muji-wine text-white shadow-sm py-4 px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div>
+            <h1 class="text-2xl font-bold flex items-center gap-2">
+                <span>📋</span> 互動式採購申請流程圖產生器
+            </h1>
+            <p class="text-amber-100/80 text-sm mt-1">自訂節點與連線，即時檢視動態 SVG 流程圖、分支與回圈</p>
         </div>
-      </div>
-    </div>
-    <div class="builder-foot">
-      <div class="foot-info" id="footProgress">—</div>
-      <div class="foot-actions">
-        <button id="btnApply" class="btn" hidden>套用最新欄位</button>
-        <button id="btnRestore" class="btn">還原合併結果</button>
-        <button id="btnReset" class="btn btn-ghost">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
-          清空欄位
-        </button>
-        <button id="btnDownload" class="btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          下載 .txt
-        </button>
-        <button id="btnCopy" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          複製目前提示詞
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+        <div class="flex items-center gap-3 flex-wrap">
+            <button onclick="app.loadCaseA()" class="bg-muji-wineDark hover:bg-muji-wineLight text-white px-3 py-2 rounded-lg text-sm font-medium transition shadow-sm border border-white/20">
+                載入案例 A 範本
+            </button>
+            <button onclick="app.loadCaseB()" class="bg-muji-wineDark hover:bg-muji-wineLight text-white px-3 py-2 rounded-lg text-sm font-medium transition shadow-sm border border-white/20">
+                載入案例 B 範本
+            </button>
+            <button onclick="app.loadExceptionCase()" class="bg-stone-600 hover:bg-stone-500 text-white px-3 py-2 rounded-lg text-sm font-medium transition shadow-sm">
+                載入例外測試 (不存在節點)
+            </button>
+            <button onclick="app.clearAllData()" class="bg-stone-800 hover:bg-stone-700 text-white px-3 py-2 rounded-lg text-sm font-medium transition shadow-sm">
+                清空全部資料
+            </button>
+        </div>
+    </header>
 
-<div class="toast" id="toast">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-  <span id="toastText">已複製</span>
-</div>
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Left Panel: Editors for Nodes and Transitions (5 Cols on large screen) -->
+        <section class="lg:col-span-5 flex flex-col gap-6">
+            
+            <!-- Error / Validation Alert Box -->
+            <div id="error-container" class="hidden bg-rose-50 border-l-4 border-muji-wine p-4 rounded-r-lg shadow-sm">
+                <div class="flex items-start">
+                    <div class="text-muji-wine text-lg mr-3">⚠️</div>
+                    <div>
+                        <h3 class="text-sm font-bold text-muji-wine">資料驗證錯誤（已阻擋不正常繪圖）</h3>
+                        <ul id="error-list" class="mt-1 text-xs text-rose-800 list-disc list-inside space-y-1"></ul>
+                    </div>
+                </div>
+            </div>
 
-<script>
-const PROMPTS = [{"title":"執行摘要：指定受眾、字數與重點數","text":"請為下方內容製作執行摘要。\n受眾：[摘要受眾]\n字數上限：[字數上限]\n重點數上限：[重點數上限]\n依受眾背景解釋必要術語，優先列出重要發現與建議；數字與事實只引用資料。資料不足時明說，不為湊點數新增內容。\n原始資料：\n[原始資料]","fields":[{"id":"f1","raw":"摘要受眾","label":"摘要受眾","type":"input","options":null,"required":true,"default":"部門主管","placeholder":"填入摘要受眾"},{"id":"f2","raw":"字數上限","label":"字數上限","type":"input","options":null,"required":true,"default":"150","placeholder":"填入字數上限"},{"id":"f3","raw":"重點數上限","label":"重點數上限","type":"input","options":null,"required":true,"default":"3","placeholder":"填入重點數上限"},{"id":"f4","raw":"原始資料","label":"原始資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的原始資料","legacyRaw":"貼上原始資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"摘要 · 改寫 · 擴寫","id":"admin-01","legacyKey":{"topic":"摘要 · 改寫 · 擴寫","title":"摘要的三個精確度控制器 · 為以下內容製作一份執行摘要"}},{"title":"同一份文件的三層摘要","text":"請對下方文件製作三層摘要，層次間以 --- 分隔：\n1. 一句話摘要，三十字內。\n2. 段落摘要，一百字內，適合轉寄。\n3. 詳細摘要，三百字內，保留重要論點與必要條件。\n只能根據文件，不補未提供的事實；篇幅不足時不湊字數。\n文件內容：\n[文件內容]","fields":[{"id":"f1","raw":"文件內容","label":"文件內容","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的文件內容"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"摘要 · 改寫 · 擴寫","id":"admin-02","legacyKey":{"topic":"摘要 · 改寫 · 擴寫","title":"摘要的三個精確度控制器 · 對以下文件製作三個層次的摘要"}},{"title":"依不同受眾改寫同一份說明","text":"請將下方說明依指定受眾各寫一版，每版以版本名稱分隔。\n受眾與用途清單：\n[受眾與用途清單]\n每版調整用詞、詳略與行動指引，保留相同事實與必要條件。主管版先寫結論；客戶版說明對方影響；技術版保留細節。只有清單要求公開貼文時才產出公開版，且不得帶入未獲准公開的內部資訊。\n原始說明：\n[原始說明]","fields":[{"id":"f1","raw":"受眾與用途清單","label":"受眾與用途清單","type":"textarea","options":null,"required":true,"default":"主管：決策摘要，200 字內\n客戶：正式親切的說明，200 字內\n技術同事：完整細節與待辦","placeholder":"貼上你的受眾與用途清單"},{"id":"f2","raw":"原始說明","label":"原始說明","type":"input","options":null,"required":true,"default":"","placeholder":"填入原始說明"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"摘要 · 改寫 · 擴寫","id":"admin-03","legacyKey":{"topic":"摘要 · 改寫 · 擴寫","title":"改寫的四個受眾版本"}},{"title":"將報告骨架擴寫成完整段落","text":"請把下方骨架擴寫成報告段落。\n報告用途與受眾：[報告用途與受眾]\n報告期間：[報告期間]\n語氣：正式、直接，以資料支持結論。\n保留骨架原有標題，每點擴寫八十至一百二十字；數字、成果與原因只採用骨架或補充資料。缺資訊標「待補」，不可自行補寫成果。\n報告骨架與補充資料：\n[報告骨架與補充資料]","fields":[{"id":"f1","raw":"報告用途與受眾","label":"報告用途與受眾","type":"input","options":null,"required":true,"default":"","placeholder":"填入報告用途與受眾"},{"id":"f2","raw":"報告期間","label":"報告期間","type":"input","options":null,"required":false,"default":"","placeholder":"填入報告期間"},{"id":"f3","raw":"報告骨架與補充資料","label":"報告骨架與補充資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的報告骨架與補充資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"摘要 · 改寫 · 擴寫","id":"admin-04","legacyKey":{"topic":"摘要 · 改寫 · 擴寫","title":"擴寫：從骨架到成品"}},{"title":"會議內容一次生成三層摘要","text":"你是會議內容整理助理。根據逐字稿生成：\n1. 三十字內的一句話結論，適合短訊通知。\n2. 一百字內的段落摘要，適合轉寄未出席者。\n3. 三百字內的詳細摘要，含決議、待辦、負責人與期限。\n各層用 --- 分隔並標註用途。保留具體數字與日期；缺負責人或期限寫「未指定」，不得推測。\n會議逐字稿：\n[會議逐字稿]","fields":[{"id":"f1","raw":"會議逐字稿","label":"會議逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的會議逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"摘要 · 改寫 · 擴寫","id":"admin-05","legacyKey":{"topic":"摘要 · 改寫 · 擴寫","title":"三層摘要一次生成"}},{"title":"組織公告的多受眾版本","text":"請依下列受眾清單，將同一份公告各改寫一版。\n受眾清單：\n[受眾清單]\n共同規則：只保留原文實際日期、制度與責任；每版結尾交代該受眾需要做什麼。不加入原文沒有的導入時程或緩衝規則。公開版本移除內部資訊。不用「持續優化」等套話。\n原始公告：\n[原始公告]","fields":[{"id":"f1","raw":"受眾清單","label":"受眾清單","type":"textarea","options":null,"required":true,"default":"主管：結論與決策\n員工：影響與配合事項\n執行窗口：時程、責任與待確認問題","placeholder":"貼上你的受眾清單"},{"id":"f2","raw":"原始公告","label":"原始公告","type":"input","options":null,"required":true,"default":"","placeholder":"填入原始公告"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"摘要 · 改寫 · 擴寫","id":"admin-06","legacyKey":{"topic":"摘要 · 改寫 · 擴寫","title":"一次生成四版本"}},{"title":"季度報告：骨架轉成結論先行段落","text":"請將骨架擴寫為管理層閱讀的成果報告。\n報告期間：[報告期間]\n受眾：[受眾]\n保留實際一級標題，每個標題下寫八十至一百二十字，第一句先說結論，再交代產出、未完成之處與下一步。\n只能引用已提供的數字與原因；缺資訊標待補。不用「積極推動」「持續努力」等空話。\n報告骨架：\n[報告骨架]","fields":[{"id":"f1","raw":"報告期間","label":"報告期間","type":"input","options":null,"required":false,"default":"","placeholder":"填入報告期間"},{"id":"f2","raw":"受眾","label":"受眾","type":"input","options":null,"required":true,"default":"管理層","placeholder":"填入受眾"},{"id":"f3","raw":"報告骨架","label":"報告骨架","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的報告骨架"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"摘要 · 改寫 · 擴寫","id":"admin-07","legacyKey":{"topic":"摘要 · 改寫 · 擴寫","title":"擴寫成報告段落"}},{"title":"商業 Email：確認、拒絕、請示或跟進","text":"你是商業郵件撰寫助理。請依以下資訊寫一封 Email。\n信件類型：[信件類型]\n收件人：[收件人]\n雙方關係：[雙方關係]\n背景：[背景]\n核心訊息：[核心訊息]\n語氣：[語氣]\n必要的下一步：[下一步]\n主旨十五字內、正文二百字內；結尾寫清楚誰要做什麼。日期與承諾只能依提供資訊，缺漏標待確認。不用「敬啟者」或冗長問候。\n輸出主旨與正文。","fields":[{"id":"f1","raw":"信件類型","label":"信件類型","type":"select","options":["確認","拒絕","請示","跟進"],"required":true,"default":"","placeholder":"填入信件類型"},{"id":"f2","raw":"收件人","label":"收件人","type":"input","options":null,"required":true,"default":"","placeholder":"填入收件人"},{"id":"f3","raw":"雙方關係","label":"雙方關係","type":"input","options":null,"required":true,"default":"","placeholder":"填入雙方關係"},{"id":"f4","raw":"背景","label":"背景","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的背景"},{"id":"f5","raw":"核心訊息","label":"核心訊息","type":"input","options":null,"required":true,"default":"","placeholder":"填入核心訊息"},{"id":"f6","raw":"語氣","label":"語氣","type":"select","options":["正式","親切","中性"],"required":true,"default":"中性","placeholder":"填入語氣"},{"id":"f7","raw":"下一步","label":"下一步","type":"input","options":null,"required":false,"default":"","placeholder":"填入下一步"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"Email · 會議紀錄 · 週報 · 公告","id":"admin-08","legacyKey":{"topic":"Email · 會議紀錄 · 週報 · 公告","title":"Email 的四種類型模板化"}},{"title":"會議筆記轉決議、待辦與摘要","text":"根據會議逐字稿或筆記，輸出：\n1. 決議事項，每項一行。\n2. 待辦事項，包含負責人、任務、截止日期。\n3. 待確認與下次討論問題。\n4. 一百字內會議摘要。\n沒有決議或待辦可寫「本次無」；有事項但缺負責人或期限則寫「未指定」，不要把資訊缺失當成沒有事項。\n會議資料：\n[會議資料]","fields":[{"id":"f1","raw":"會議資料","label":"會議資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的會議資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"Email · 會議紀錄 · 週報 · 公告","id":"admin-09","legacyKey":{"topic":"Email · 會議紀錄 · 週報 · 公告","title":"會議記錄的轉換邏輯"}},{"title":"本週筆記轉工作週報","text":"請根據本週工作資料生成週報。\n報告週次或日期區間：[報告期間]\n依序列出：本週完成、本週亮點、未完成或延後及原因、下週計畫、需要支援。\n每項完成事項二十字內；有數據才附數據。下週計畫只採用資料中的待辦，缺時程標待確認。需要支援沒有就略去。\n語氣具體、客觀，不用「持續推進」「積極跟進」。\n工作資料：\n[工作資料]","fields":[{"id":"f1","raw":"報告期間","label":"報告期間","type":"input","options":null,"required":false,"default":"","placeholder":"填入報告期間"},{"id":"f2","raw":"工作資料","label":"工作資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的工作資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"Email · 會議紀錄 · 週報 · 公告","id":"admin-10","legacyKey":{"topic":"Email · 會議紀錄 · 週報 · 公告","title":"週報的快速生成框架"}},{"title":"依組織語言標準改寫公告","text":"請依組織語言標準改寫公告，並列出修改原因。\n稱謂：[稱謂]\n組織語言標準：\n[組織語言標準]\n聯絡窗口：[聯絡窗口]\n每段不超過三句，保留原公告的事實、日期與條件；未提供窗口時不自行編寫。\n公告草稿：\n[公告草稿]","fields":[{"id":"f1","raw":"稱謂","label":"稱謂","type":"input","options":null,"required":true,"default":"各位同仁","placeholder":"填入稱謂"},{"id":"f2","raw":"組織語言標準","label":"組織語言標準","type":"textarea","options":null,"required":true,"default":"正式但不生硬；不用「茲通知」「敬希遵照」等公文語。","placeholder":"貼上你的組織語言標準"},{"id":"f3","raw":"聯絡窗口","label":"聯絡窗口","type":"input","options":null,"required":false,"default":"","placeholder":"填入聯絡窗口"},{"id":"f4","raw":"公告草稿","label":"公告草稿","type":"input","options":null,"required":true,"default":"","placeholder":"填入公告草稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"Email · 會議紀錄 · 週報 · 公告","id":"admin-11","legacyKey":{"topic":"Email · 會議紀錄 · 週報 · 公告","title":"文風一致化：讓組織說同一種語言"}},{"title":"依情境生成可寄出的行政回信","text":"請依參數撰寫 Email。\n信件類型：[信件類型]\n收件對象：[收件對象]\n情境與必要訊息：\n[情境與必要訊息]\n主旨十五字內；正文二百字內，第一句先表態，接著補理由與行動。結尾交代下一步的責任與時間，未提供者標待確認。\n不要套用無內容的問候與結尾。只輸出主旨、正文，不補資料外的承諾。","fields":[{"id":"f1","raw":"信件類型","label":"信件類型","type":"select","options":["確認","拒絕","請示","跟進"],"required":true,"default":"","placeholder":"填入信件類型"},{"id":"f2","raw":"收件對象","label":"收件對象","type":"input","options":null,"required":true,"default":"","placeholder":"填入收件對象"},{"id":"f3","raw":"情境與必要訊息","label":"情境與必要訊息","type":"input","options":null,"required":true,"default":"","placeholder":"填入情境與必要訊息"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"Email · 會議紀錄 · 週報 · 公告","id":"admin-12","legacyKey":{"topic":"Email · 會議紀錄 · 週報 · 公告","title":"通用四類型模板"}},{"title":"逐字稿轉結構化待辦清單","text":"請從逐字稿整理決議、待辦與待確認問題，再寫一百字內摘要。\n待辦表格包含：負責人、任務、截止日、狀態。缺負責人或日期寫「未指定」，狀態標「待補」。決議與待辦分開，不把閒聊當任務。保留原始數字與日期。\n會議逐字稿：\n[會議逐字稿]","fields":[{"id":"f1","raw":"會議逐字稿","label":"會議逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的會議逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"Email · 會議紀錄 · 週報 · 公告","id":"admin-13","legacyKey":{"topic":"Email · 會議紀錄 · 週報 · 公告","title":"逐字稿 → 結構化待辦"}},{"title":"職務週報：成果、風險與下週計畫","text":"請根據速記生成工作週報。\n職務或部門：[職務或部門]\n報告期間：[報告期間]\n標題使用實際職務與期間；未指定期間時由速記辨識，無法辨識則標待確認。\n區塊：本週完成、亮點、延後與風險、下週計畫、需要支援。\n完成事項以動詞與實際產出表達；有量化資料才寫數字。延後事項附原文原因與補救時間，缺時間不猜。無支援需求寫本週無。\n本週速記：\n[本週速記]","fields":[{"id":"f1","raw":"職務或部門","label":"職務或部門","type":"input","options":null,"required":false,"default":"","placeholder":"填入職務或部門"},{"id":"f2","raw":"報告期間","label":"報告期間","type":"input","options":null,"required":false,"default":"","placeholder":"填入報告期間"},{"id":"f3","raw":"本週速記","label":"本週速記","type":"input","options":null,"required":true,"default":"","placeholder":"填入本週速記"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"Email · 會議紀錄 · 週報 · 公告","id":"admin-14","legacyKey":{"topic":"Email · 會議紀錄 · 週報 · 公告","title":"行銷企劃週報生成器（存成 Claude Project）"}},{"title":"三家競品的結構化比較表","text":"根據三份獨立資料製作競品比較表。\n比較維度：[比較維度]\n競品 A 資料：\n[競品 A 資料]\n競品 B 資料：\n[競品 B 資料]\n競品 C 資料：\n[競品 C 資料]\n缺資料填「資料不足，需確認」，不可自行推測；最後列最值得關注的兩個競爭焦點，附資料依據。","fields":[{"id":"f1","raw":"比較維度","label":"比較維度","type":"input","options":null,"required":true,"default":"定價、目標客群、核心功能、限製、市場定位","placeholder":"填入比較維度"},{"id":"f2","raw":"競品 A 資料","label":"競品 A 資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的競品 A 資料"},{"id":"f3","raw":"競品 B 資料","label":"競品 B 資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的競品 B 資料"},{"id":"f4","raw":"競品 C 資料","label":"競品 C 資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的競品 C 資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"研究比較 · 簡報骨架","id":"admin-15","legacyKey":{"topic":"研究比較 · 簡報骨架","title":"競品分析：結構化比較表"}},{"title":"依主題與聽眾生成提案簡報骨架","text":"你是提案簡報設計助理。依資料生成簡報骨架。\n提案主題：[提案主題]\n目標聽眾與顧慮：[目標聽眾與顧慮]\n頁數：[頁數]\n每頁包含頁名、一句核心主張、最多三個支撐要點、建議圖表；說明這頁與決策的關係。只能引用研究資料，不確定數字標「需補充數據」。\n研究資料：\n[研究資料]","fields":[{"id":"f1","raw":"提案主題","label":"提案主題","type":"input","options":null,"required":true,"default":"","placeholder":"填入提案主題"},{"id":"f2","raw":"目標聽眾與顧慮","label":"目標聽眾與顧慮","type":"input","options":null,"required":true,"default":"","placeholder":"填入目標聽眾與顧慮"},{"id":"f3","raw":"頁數","label":"頁數","type":"input","options":null,"required":true,"default":"8","placeholder":"填入頁數"},{"id":"f4","raw":"研究資料","label":"研究資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的研究資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"研究比較 · 簡報骨架","id":"admin-16","legacyKey":{"topic":"研究比較 · 簡報骨架","title":"生成簡報骨架的完整 Prompt"}},{"title":"競品矩陣與待查證清單","text":"請根據競品資料製作結構化比較表。\n比較維度：\n[比較維度]\n每家附四十字內摘要，再列兩個競爭焦點與待查證清單（項目、原因、查證方向）。\n數字須有來源；缺資料寫「資料不足」。相對成長數字缺基底時明示，不能補成絕對數字。競品數量依提供資料。\n競品資料：\n[競品資料]","fields":[{"id":"f1","raw":"比較維度","label":"比較維度","type":"input","options":null,"required":true,"default":"定位、目標客群、價格與計價單位、產品或服務差異、規模指標、競爭優勢","placeholder":"填入比較維度"},{"id":"f2","raw":"競品資料","label":"競品資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的競品資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"研究比較 · 簡報骨架","id":"admin-17","legacyKey":{"topic":"研究比較 · 簡報骨架","title":"結構化比較表 + 防幻覺條款"}},{"title":"AI 回答的幻覺紅旗檢查","text":"請逐句檢查下方 AI 回答，找出需要查證的內容。\n輸出：\nA. 紅旗表：引用內容、類型、可疑原因。類型包括數字統計、時效事件、引用來源、具體名詞。\nB. 查證優先序：按錯誤影響標 P1/P2/P3。\nC. 查證路徑：應查的來源與核對方法。\n不得因缺來源就直接宣稱內容為假，也不可只因年份新就判幻覺。合理抽象描述可標低風險。最後列使用回答前最需查證的最多兩項。\n待查回答：\n[待查回答]","fields":[{"id":"f1","raw":"待查回答","label":"待查回答","type":"input","options":null,"required":true,"default":"","placeholder":"填入待查回答"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"研究比較 · 簡報骨架","id":"admin-18","legacyKey":{"topic":"研究比較 · 簡報骨架","title":"幻覺紅旗檢查器"}},{"title":"八頁提案：從問題到行動請求","text":"請依研究摘要製作八頁提案骨架。\n主題：[提案主題]\n聽眾與主要顧慮：[聽眾與主要顧慮]\n結構：問題或機會、現況、原因、解決方向、具體方案、預期成果、執行計畫、行動請求。\n每頁有一句主張、最多三個支撐點與建議圖表。時程、成果與數字只依資料，缺漏標待補。最後一頁說清楚希望聽眾決定什麼。\n研究摘要：\n[研究摘要]","fields":[{"id":"f1","raw":"提案主題","label":"提案主題","type":"input","options":null,"required":true,"default":"","placeholder":"填入提案主題"},{"id":"f2","raw":"聽眾與主要顧慮","label":"聽眾與主要顧慮","type":"input","options":null,"required":true,"default":"","placeholder":"填入聽眾與主要顧慮"},{"id":"f3","raw":"研究摘要","label":"研究摘要","type":"input","options":null,"required":true,"default":"","placeholder":"填入研究摘要"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"研究比較 · 簡報骨架","id":"admin-19","legacyKey":{"topic":"研究比較 · 簡報骨架","title":"8 頁提案骨架"}},{"title":"白板照片轉文字與結構大綱","text":"請分析已提供的白板照片：\n1. 辨識可讀文字，模糊處標「辨識不確定」並保留位置描述。\n2. 描述方框、箭頭與其他圖形關係。\n3. 整理 Markdown 大綱，區分原文與推測。\n4. 最後寫二至三句主題摘要。\n未收到或無法讀取照片時，先請我提供照片，不生成內容。","fields":[],"mode":"attachment","preparation":"先在 AI 對話中加入白板照片，再貼上提示詞；這個工作台不會替你上傳照片。","use":"先在 AI 對話中加入白板照片，再貼上提示詞；這個工作台不會替你上傳照片。","version":2,"topic":"多模態（圖片 · PDF · 語音）","id":"admin-20","legacyKey":{"topic":"多模態（圖片 · PDF · 語音）","title":"圖片輸入：把視覺資訊變成可處理的文字"}},{"title":"PDF 的結構化摘要與行動項目","text":"請閱讀已提供的文件，輸出文件類型與目的、三至五項核心結論、關鍵事實、可採取的行動與不確定內容。\n摘要三百字內，結論附頁碼或章節定位。文件沒有的數字、主張和行動不得補寫。未收到或無法讀取文件時先請我提供。","fields":[],"mode":"attachment","preparation":"先在 AI 對話中加入 PDF；確認文件可讀，再貼上提示詞。","use":"先在 AI 對話中加入 PDF；確認文件可讀，再貼上提示詞。","version":2,"topic":"多模態（圖片 · PDF · 語音）","id":"admin-21","legacyKey":{"topic":"多模態（圖片 · PDF · 語音）","title":"PDF 文件分析：結構化摘要、重點萃取、條款整理 · 上傳 PDF"}},{"title":"合約 PDF 的義務、期限與費用整理","text":"請閱讀已提供的合約：\n1. 用表格列各當事方義務，採合約實際名稱。\n2. 重要日期與期限。\n3. 金額、付款條件與違約相關條款。\n4. 終止條件。\n5. 措辭不明或需確認的內容。\n每項附條號或頁碼，缺資訊寫「未載明」。未收到或無法讀取合約時先請我提供；整理不代表條款已確認適用。","fields":[],"mode":"attachment","preparation":"先在 AI 對話中加入合約 PDF；保留條號與頁碼，方便核對。","use":"先在 AI 對話中加入合約 PDF；保留條號與頁碼，方便核對。","version":2,"topic":"多模態（圖片 · PDF · 語音）","id":"admin-22","legacyKey":{"topic":"多模態（圖片 · PDF · 語音）","title":"PDF 文件分析：結構化摘要、重點萃取、條款整理 · 上傳合約 PDF"}},{"title":"會議轉錄文字轉正式紀錄","text":"請把會議轉錄文字整理為正式紀錄，保留必要事實並去除重複口語。\n輸出基本資訊、按主題整理的重點、決議、行動項目、待確認事項。\n行動項目包含負責人、任務與期限；缺欄位標「未指定」。辨識錯誤或模糊人名附原文，請使用者確認，不自行選字。\n會議轉錄內容：\n[會議轉錄內容]","fields":[{"id":"f1","raw":"會議轉錄內容","label":"會議轉錄內容","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的會議轉錄內容"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"多模態（圖片 · PDF · 語音）","id":"admin-23","legacyKey":{"topic":"多模態（圖片 · PDF · 語音）","title":"語音轉文字後再 AI 處理的完整鏈"}},{"title":"腦力激盪白板轉 Markdown 筆記","text":"請根據白板照片還原可讀文字、主題分區、箭頭與便利貼關係。\n按照片實際內容整理：主題、討論選項、決議、行動項目、不確定內容；沒有的區塊寫未見資料。保留符號意義，縮寫解釋標推測。\n最後附八十字內摘要與改善拍照可讀性的建議。若照片不可讀，先說明需要重拍的位置。","fields":[],"mode":"attachment","preparation":"先加入清晰的白板照片。可補充會議背景，但不要用背景取代看不清的文字。","use":"先加入清晰的白板照片。可補充會議背景，但不要用背景取代看不清的文字。","version":2,"topic":"多模態（圖片 · PDF · 語音）","id":"admin-24","legacyKey":{"topic":"多模態（圖片 · PDF · 語音）","title":"白板照 → Markdown 大綱"}},{"title":"依己方身分整理合約條款","text":"請協助整理合約，不提供未經確認的法律結論。\n己方名稱與合約身分：[己方名稱與合約身分]\n關注事項：[關注事項]\n輸出各方義務表、日期與未履行後果、金額與費用、己方需確認的條款、終止條件及簽約前問題。\n關注條款逐字引用必要片段並附條號或頁碼。僅依合約描述影響，不推定甲方就是己方；缺立場或條款資訊時先追問。\n合約內容：\n[合約內容]","fields":[{"id":"f1","raw":"己方名稱與合約身分","label":"己方名稱與合約身分","type":"input","options":null,"required":true,"default":"","placeholder":"填入己方名稱與合約身分"},{"id":"f2","raw":"關注事項","label":"關注事項","type":"input","options":null,"required":false,"default":"","placeholder":"填入關注事項"},{"id":"f3","raw":"合約內容","label":"合約內容","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的合約內容"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"多模態（圖片 · PDF · 語音）","id":"admin-25","legacyKey":{"topic":"多模態（圖片 · PDF · 語音）","title":"合約條款結構化整理"}},{"title":"語音轉錄的正式會議紀錄與疑點","text":"請整理轉錄文字，輸出會議日期、出席者、議題、討論重點、決議、行動表與辨識疑點。\n行動表欄位為負責人、任務、截止日、狀態。缺資料標未指定、待確認，不忽略該任務。疑似同音字或人名錯誤列原文與待核對項，不直接改成推測人名。\n保留實際數字與日期；口語冗詞可刪，決議不能更改。\n轉錄文字：\n[轉錄文字]","fields":[{"id":"f1","raw":"轉錄文字","label":"轉錄文字","type":"input","options":null,"required":true,"default":"","placeholder":"填入轉錄文字"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"多模態（圖片 · PDF · 語音）","id":"admin-26","legacyKey":{"topic":"多模態（圖片 · PDF · 語音）","title":"逐字稿 → 正式會議紀錄"}},{"title":"會議決議轉員工公告","text":"你是公告整理助理。從會議逐字稿挑出需通知受眾的決議。\n公告受眾：[公告受眾]\n發布範圍與限製：[發布範圍與限製]\n每項寫決議、生效日與配合事項；不能補未提供的日期、金額、地點或流程。標為保密或尚未決定的內容不發布。無法判斷者列「待確認發布」。\n先列可公告與不可公告項數，再輸出公告本文，最後列未公告項與原因。\n會議逐字稿：\n[會議逐字稿]","fields":[{"id":"f1","raw":"公告受眾","label":"公告受眾","type":"input","options":null,"required":true,"default":"全體員工","placeholder":"填入公告受眾"},{"id":"f2","raw":"發布範圍與限製","label":"發布範圍與限製","type":"input","options":null,"required":true,"default":"僅發布已確認且需員工配合的決議；保密討論、個別人事與未定案內容不發布。","placeholder":"填入發布範圍與限製"},{"id":"f3","raw":"會議逐字稿","label":"會議逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的會議逐字稿","legacyRaw":"貼上會議逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"行政文書情境","id":"admin-27","legacyKey":{"topic":"行政文書情境","title":"主版 Prompt（主線示範）"}},{"title":"請假或出差申請表單模板","text":"請設計申請表單模板。\n申請類型：[申請類型]\n組織欄位與簽核規則：\n[組織欄位與簽核規則]\n預設包含申請人、員工識別、部門、類型、起訖時間、天數、代理人、交接、附件、理由與簽核；出差另有目的地與費用。\n先列可建立表單的欄位、型態與必填性，再給純文字版與三十字內填寫提示。未提供組織政策者標「建議欄位」，不自行宣稱公司要求。","fields":[{"id":"f1","raw":"申請類型","label":"申請類型","type":"input","options":null,"required":true,"default":"請假與出差","placeholder":"填入申請類型"},{"id":"f2","raw":"組織欄位與簽核規則","label":"組織欄位與簽核規則","type":"textarea","options":null,"required":false,"default":"","placeholder":"貼上你的組織欄位與簽核規則"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"行政文書情境","id":"admin-28","legacyKey":{"topic":"行政文書情境","title":"情境 A · 人資行政"}},{"title":"系統維護、活動與政策公告模板","text":"請為指定類型各設計一份對外公告空白模板。\n公告類型：[公告類型]\n受眾：[公告受眾]\n結構：十五字內標題、一句影響重點、細節、用戶行動、聯絡窗口。\n每種類型附一個明確標「虛構範例」的例子，與空白模板分開；不要讓示例日期或數字混進空白模板。語氣正式直接，致歉或致謝依實際事件需要。\n最後列需要使用者替換的資訊。","fields":[{"id":"f1","raw":"公告類型","label":"公告類型","type":"input","options":null,"required":true,"default":"系統維護、活動通知、政策更新","placeholder":"填入公告類型"},{"id":"f2","raw":"公告受眾","label":"公告受眾","type":"input","options":null,"required":true,"default":"外部使用者","placeholder":"填入公告受眾"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"行政文書情境","id":"admin-29","legacyKey":{"topic":"行政文書情境","title":"情境 B · 對外公告"}},{"title":"團隊週報空白模板","text":"請設計指定團隊的週報空白模板。\n團隊類型：[團隊類型]\n組織補充規則：[組織補充規則]\n包含團隊名稱、週期、上週成果、本週計畫、需協助、風險。\n成果以動詞與具體產出表達，有資料才附量化指標；計畫有動作、負責人與完成日；協助寫需要誰做什麼；風險有影響與處理方案。\n輸出 Markdown 與純文字版，欄位空白可填，不預填虛構成果或指標。","fields":[{"id":"f1","raw":"團隊類型","label":"團隊類型","type":"input","options":null,"required":true,"default":"跨部門工作團隊","placeholder":"填入團隊類型"},{"id":"f2","raw":"組織補充規則","label":"組織補充規則","type":"textarea","options":null,"required":false,"default":"","placeholder":"貼上你的組織補充規則"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"行政文書情境","id":"admin-30","legacyKey":{"topic":"行政文書情境","title":"情境 C · 內部管理"}},{"title":"同一事件的三語氣客戶道歉信","text":"請依同一份事件資料，寫正式、標準、誠懇三種語氣的客戶信。\n客戶關係：[客戶關係]\n事件、影響、補救、時程與聯絡窗口：\n[事件資料]\n三版都保留主旨、致歉、事件、影響、補救、時程與窗口，差別只在用詞與開場，事實、結構和資訊量一致。\n不預設客戶情緒，不編補償承諾。缺資訊標待確認。最後給三行內語氣選用指引。","fields":[{"id":"f1","raw":"客戶關係","label":"客戶關係","type":"input","options":null,"required":true,"default":"","placeholder":"填入客戶關係"},{"id":"f2","raw":"事件資料","label":"事件資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的事件資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"行政文書情境","id":"admin-31","legacyKey":{"topic":"行政文書情境","title":"情境 D · 客戶溝通"}},{"title":"會議待辦與決議分流","text":"你是會議紀錄整理助理。抽出所有可執行待辦，另列政策或方向決議。\n待辦表格：編號、負責人、任務、截止日、狀態（完整或待補）。缺欄位寫未指定；閒聊與無具體行動的提及不列任務。\n開頭寫待辦數、待補數與決議數，結尾簡述哪些離題內容未列入。不得推測日期或人名。\n會議逐字稿：\n[會議逐字稿]","fields":[{"id":"f1","raw":"會議逐字稿","label":"會議逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的會議逐字稿","legacyRaw":"貼上會議逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"會議轉待辦情境","id":"admin-32","legacyKey":{"topic":"會議轉待辦情境","title":"主版 Prompt（主線示範）"}},{"title":"跨部門會議的任務與依賴","text":"請從逐字稿整理跨部門待辦。\n可用部門對照：[部門對照]\n表格：編號、任務、負責人、部門、截止日、狀態。缺欄位寫未指定。\n表格後列模糊待確認事項與跨部門依賴，依賴須有原文依據；不得編造部門與順序。\n會議逐字稿：\n[會議逐字稿]","fields":[{"id":"f1","raw":"部門對照","label":"部門對照","type":"input","options":null,"required":false,"default":"","placeholder":"填入部門對照"},{"id":"f2","raw":"會議逐字稿","label":"會議逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的會議逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"會議轉待辦情境","id":"admin-33","legacyKey":{"topic":"會議轉待辦情境","title":"情境 A · 跨部門週會"}},{"title":"客戶訪談轉需求與確認清單","text":"請拆解客戶需求訪談，輸出明確需求、待確認需求、承諾差距與後續確認清單。\n每項需求附原文、影響、已明確指定的負責人與期限。對「順便」「忘了講」等內容檢查影響，但不能只憑措辭判成重大需求。\n區分客戶期待、我方已承諾與分析建議；預算、上線日、技術細節缺資料就待確認。\n訪談逐字稿：\n[訪談逐字稿]","fields":[{"id":"f1","raw":"訪談逐字稿","label":"訪談逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的訪談逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"會議轉待辦情境","id":"admin-34","legacyKey":{"topic":"會議轉待辦情境","title":"情境 B · 客戶需求會議"}},{"title":"一對一回報：明確任務與待確認期待","text":"請從一對一逐字稿整理兩類事項。\nA 類：已明講並確認的交辦，列任務、負責人與期限。\nB 類：可能的期待，附對方原話、推測理由與建議確認問題，標「推測，待對方確認」。\n不能把推測當已承諾任務，不根據語氣捏造對方意圖。最後列最值得先確認的一項。\n一對一逐字稿：\n[一對一逐字稿]","fields":[{"id":"f1","raw":"一對一逐字稿","label":"一對一逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的一對一逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"會議轉待辦情境","id":"admin-35","legacyKey":{"topic":"會議轉待辦情境","title":"情境 C · 一對一回報"}},{"title":"腦力激盪轉候選點子與指派建議","text":"請將討論整理為候選點子、已認領任務、建議指派與會後確認清單。\n主持人或指派窗口：[指派窗口]\n成員職能資料：[成員職能資料]\n已認領與建議人選分開；未認領寫「待指派」，沒有成員依據時不猜人選。建議須引用逐字稿或成員資料。\n會後清單寫要向誰確認什麼；缺期限標待確認，不能直接把候選點子當已決定要做。\n討論逐字稿：\n[討論逐字稿]","fields":[{"id":"f1","raw":"指派窗口","label":"指派窗口","type":"input","options":null,"required":false,"default":"","placeholder":"填入指派窗口"},{"id":"f2","raw":"成員職能資料","label":"成員職能資料","type":"textarea","options":null,"required":false,"default":"","placeholder":"貼上你的成員職能資料"},{"id":"f3","raw":"討論逐字稿","label":"討論逐字稿","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的討論逐字稿"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"會議轉待辦情境","id":"admin-36","legacyKey":{"topic":"會議轉待辦情境","title":"情境 D · 團隊腦力激盪"}},{"title":"工具採購提案的決策簡報","text":"請根據背景資料產出工具採購提案。\n聽眾與顧慮：[聽眾與顧慮]\n簡報時長（分鐘）：[簡報時長]\n八頁：痛點、量化影響、候選比較、推薦方案、效益試算、試用計畫、風險、決策請求。\n每頁列頁名、核心主張、最多三點支撐與建議視覺。\n效益試算寫公式與資料來源；工時、時薪、成本或預期節省率未提供時標待補，不自編 ROI。末尾附時間分配與待補資料。\n提案背景資料：\n[提案背景資料]","fields":[{"id":"f1","raw":"聽眾與顧慮","label":"聽眾與顧慮","type":"input","options":null,"required":true,"default":"","placeholder":"填入聽眾與顧慮"},{"id":"f2","raw":"簡報時長","label":"簡報時長","type":"input","options":null,"required":true,"default":"15","placeholder":"填入簡報時長"},{"id":"f3","raw":"提案背景資料","label":"提案背景資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的提案背景資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"提案簡報情境","id":"admin-37","legacyKey":{"topic":"提案簡報情境","title":"主版 Prompt（主線示範）"}},{"title":"工具採購：現況、候選方案與 ROI","text":"請為工具採購案製作八頁骨架。\n現況與實測資料：\n[現況與實測資料]\n候選工具、價格與比較資料：\n[工具比較資料]\n預算與效益計算假設：\n[預算與效益假設]\n依序整理痛點、損失、比較、推薦、ROI、試用、風險、決策請求。每頁一主張、最多三支撐點、建議圖表。\n效益須列每月可省工時、時薪及成本口徑；未知部分標待補。不能假定某工具已試用或某漏追率已量測。風險依資料，區分需確認事項。","fields":[{"id":"f1","raw":"現況與實測資料","label":"現況與實測資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的現況與實測資料"},{"id":"f2","raw":"工具比較資料","label":"工具比較資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的工具比較資料"},{"id":"f3","raw":"預算與效益假設","label":"預算與效益假設","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的預算與效益假設"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"提案簡報情境","id":"admin-38","legacyKey":{"topic":"提案簡報情境","title":"情境 A｜對主管提「工具採購」"}},{"title":"服務升級與續約提案","text":"請依資料製作客戶服務升級提案。\n既有合作成果：\n[合作成果]\n升級方案、價格及可用比較資料：\n[升級方案資料]\n客戶顧慮與可承諾的條件：\n[客戶顧慮與條件]\n八頁：成果、需求變化、升級輪廓、模組、方案比較、價格、風險應對、下一步。每頁一主張、最多三個論據與視覺建議。\n所有成果、費用、競品與退場條件必須來自資料；缺資料標待確認，不編退款或成效保證。末尾列可能提問與依據。","fields":[{"id":"f1","raw":"合作成果","label":"合作成果","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的合作成果"},{"id":"f2","raw":"升級方案資料","label":"升級方案資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的升級方案資料"},{"id":"f3","raw":"客戶顧慮與條件","label":"客戶顧慮與條件","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的客戶顧慮與條件"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"提案簡報情境","id":"admin-39","legacyKey":{"topic":"提案簡報情境","title":"情境 B｜對客戶提「服務升級方案」"}},{"title":"流程優化的團隊共識提案","text":"請依資料製作內部流程優化提案。\n現況與影響資料：\n[現況資料]\n成員顧慮與主管立場：\n[顧慮與立場]\n候選方案、試跑與上線條件：\n[方案與時程]\n八頁：共同痛點、實際影響、現有流程限製、新方案、逐項回應顧慮、試跑、分工、決策與時程。\n每頁列主張、支撐與視覺；不點名指責，不預設反對者人數，不編案件數或上線日。缺資料寫待補。","fields":[{"id":"f1","raw":"現況資料","label":"現況資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的現況資料"},{"id":"f2","raw":"顧慮與立場","label":"顧慮與立場","type":"input","options":null,"required":true,"default":"","placeholder":"填入顧慮與立場"},{"id":"f3","raw":"方案與時程","label":"方案與時程","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的方案與時程"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"提案簡報情境","id":"admin-40","legacyKey":{"topic":"提案簡報情境","title":"情境 C｜對團隊提「流程優化」"}},{"title":"早期產品的投資提案骨架","text":"請依資料製作投資提案。\n簡報時長（分鐘）：[簡報時長]\n產品、客群與已驗證數據：\n[產品與驗證數據]\n團隊、募資目標與資金用途：\n[團隊與募資資料]\n八頁：產品、痛點、時機、解方、已驗證成果、商業模式、團隊、資金與下一步。\n每頁一句主張與建議視覺，依總時長分配時間。成果引用實際觀察期；CAC、LTV 等資料不足時列待補，不從少量數據編造估算。最後列投資人可能提問與需補資料。","fields":[{"id":"f1","raw":"簡報時長","label":"簡報時長","type":"input","options":null,"required":true,"default":"5","placeholder":"填入簡報時長"},{"id":"f2","raw":"產品與驗證數據","label":"產品與驗證數據","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的產品與驗證數據"},{"id":"f3","raw":"團隊與募資資料","label":"團隊與募資資料","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的團隊與募資資料"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"提案簡報情境","id":"admin-41","legacyKey":{"topic":"提案簡報情境","title":"情境 D｜對投資人提「早期產品」"}},{"title":"工作日誌轉成果週報與引用範圍","text":"你是工作成果整理助理。請整理週報。\n職務或部門：[職務或部門]\n三區塊：主要成果（動作與實際產出）、例行工作（一至兩句）、下期計畫（紀錄支持的待辦與時間）。\n未開始的交辦不能寫成已完成。成果、數字與日期只根據日誌；缺期限標待確認。整份預設二百五十字內。\n最後寫實際引用日誌數與覆蓋日期；無法辨識時明說。\n工作日誌：\n[工作日誌]","fields":[{"id":"f1","raw":"職務或部門","label":"職務或部門","type":"input","options":null,"required":false,"default":"","placeholder":"填入職務或部門"},{"id":"f2","raw":"工作日誌","label":"工作日誌","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的工作日誌","legacyRaw":"貼上工作日誌"}],"mode":"standalone","preparation":"","use":"","version":2,"topic":"多文件分析情境","id":"admin-42","legacyKey":{"topic":"多文件分析情境","title":"主版 Prompt（主線示範）"}},{"title":"研究報告的可行動結論與頁碼引用","text":"請閱讀已提供的研究報告，回答指定決策問題。\n決策問題：[決策問題]\n最多列五個核心結論，每項八十字內，附實際頁碼；無頁碼則附章節與可定位原文。區分報告原文與由資料推導的建議。\n只採用報告有依據的數字與主張；無法取得文件就先請我提供。最後列可先採取的一個動作與資料缺口。","fields":[{"id":"f1","raw":"決策問題","label":"決策問題","type":"textarea","options":null,"required":true,"default":"","placeholder":"貼上你的決策問題"}],"mode":"attachment","preparation":"先加入研究報告；若讀取失敗，依使用平台提示調整檔案，不需預設固定頁數或大小。","use":"先加入研究報告；若讀取失敗，依使用平台提示調整檔案，不需預設固定頁數或大小。","version":2,"topic":"多文件分析情境","id":"admin-43","legacyKey":{"topic":"多文件分析情境","title":"情境 A｜40 頁市場研究報告 PDF｜抽結論 + 頁碼引用"}},{"title":"手寫白板的 OCR 原文與結構筆記","text":"請分析已提供的白板照片，分兩階段：\n1. OCR 原文：逐行還原文字與箭頭位置，模糊處標「辨識不確定」，不要腦補。\n2. 結構筆記：主題、決議、行動（誰、做什麼、期限）、未決問題。\n沒有期限寫未定；縮寫保留原樣，解釋標推測。兩段用 === 分隔，最後列需使用者確認的位置。未收到照片先請我提供。","fields":[],"mode":"attachment","preparation":"先在 AI 對話中加入清晰的白板照片；反光或模糊處可重拍。","use":"先在 AI 對話中加入清晰的白板照片；反光或模糊處可重拍。","version":2,"topic":"多文件分析情境","id":"admin-44","legacyKey":{"topic":"多文件分析情境","title":"情境 B｜一張手寫白板照｜OCR + 結構化筆記"}},{"title":"多份競品文件的矩陣與切入點","text":"請對已提供的競品文件做比較。\n比較維度：[比較維度]\n我方產品或服務背景：[我方背景]\n先列實際文件名稱與代號，再做矩陣：第一欄為維度，其餘每份文件一欄。每項附文件與頁碼或章節；未提填未載明。\n各家弱點只列有來源支持的項目，不強製湊數。區分文件未提與產品確實缺少。若我方背景足夠，再列一個有依據的切入點；否則說明缺什麼資料。\n未收到文件時先請我加入文件。","fields":[{"id":"f1","raw":"比較維度","label":"比較維度","type":"input","options":null,"required":true,"default":"定位、功能、價格、客群、整合、上手條件","placeholder":"填入比較維度"},{"id":"f2","raw":"我方背景","label":"我方背景","type":"textarea","options":null,"required":false,"default":"","placeholder":"貼上你的我方背景"}],"mode":"attachment","preparation":"先加入要比較的各份文件，使用可辨識的檔名；份數依實際資料。","use":"先加入要比較的各份文件，使用可辨識的檔名；份數依實際資料。","version":2,"topic":"多文件分析情境","id":"admin-45","legacyKey":{"topic":"多文件分析情境","title":"情境 C｜三份競品 PDF｜功能矩陣 + 弱點分析"}},{"title":"合約關注條款的定位與確認問題","text":"請通讀已提供的合約，依己方身分整理需確認條款。\n己方名稱與合約身分：[己方名稱與合約身分]\n關注事項：[關注事項]\n第一段只列條號、頁碼或章節與必要原文。第二段列對己方的可能影響、需確認資訊及可供法務討論的問題。\n不得捏造條文，不能以未提供的損失數字排序；缺立場先追問。未收到或無法讀取文件先請我提供。","fields":[{"id":"f1","raw":"己方名稱與合約身分","label":"己方名稱與合約身分","type":"input","options":null,"required":true,"default":"","placeholder":"填入己方名稱與合約身分"},{"id":"f2","raw":"關注事項","label":"關注事項","type":"input","options":null,"required":false,"default":"","placeholder":"填入關注事項"}],"mode":"attachment","preparation":"先加入可讀取的合約；填寫己方名稱及合約身分，才能依立場整理。","use":"先加入可讀取的合約；填寫己方名稱及合約身分，才能依立場整理。","version":2,"topic":"多文件分析情境","id":"admin-46","legacyKey":{"topic":"多文件分析情境","title":"情境 D｜合約 PDF 審閱｜不利條款 + 位置標示"}}];
-const TOPIC_ORDER = ["摘要 · 改寫 · 擴寫", "Email · 會議紀錄 · 週報 · 公告", "研究比較 · 簡報骨架", "多模態（圖片 · PDF · 語音）", "行政文書情境", "會議轉待辦情境", "提案簡報情境", "多文件分析情境"];
-const STORAGE_KEY = 'prompt-workbench-·-text-&-knowledge';
-const state = { q:'', topic:'all', current:null, values:{}, generatedText:'', editedText:null, editBase:'', returnFocus:null };
-// Each file keeps its existing storage namespace; entries now use stable prompt IDs.
-const storage = loadStorage();
-function loadStorage(){
-  try{const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'{}');return data && typeof data==='object' && !Array.isArray(data)?data:{};}catch(e){return {};}
-}
-function saveDraft(){
-  if(!state.current)return;
-  const p=state.current;
-  storage[p.id]={version:p.version,values:Object.fromEntries(fieldsOf(p).map(f=>[f.id,state.values[f.raw]||''])),editedText:state.editedText,baseText:state.editBase};
-  try{localStorage.setItem(STORAGE_KEY,JSON.stringify(storage));document.getElementById('saveStatus').textContent='已儲存在此瀏覽器';}
-  catch(e){document.getElementById('saveStatus').textContent='無法儲存，請複製或下載保存；目前修改仍保留在本次頁面。';}
-}
-function fieldsOf(p){return p.fields||[];}
-function escape(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function hash(s){let h=0;for(let i=0;i<s.length;i++)h=((h<<5)-h)+s.charCodeAt(i)|0;return 'h'+(h>>>0).toString(36);}
-function buildFilters(){
-  const counts={};PROMPTS.forEach(p=>counts[p.topic]=(counts[p.topic]||0)+1);
-  const tf=document.getElementById('topicFilter');
-  tf.querySelectorAll('.chip').forEach(el=>el.remove());
-  tf.appendChild(makeChip('all','全部',PROMPTS.length));
-  TOPIC_ORDER.forEach(t=>{if(counts[t])tf.appendChild(makeChip(t,t,counts[t]));});
-}
-function makeChip(value,label,count){
-  const b=document.createElement('button');b.type='button';b.className='chip'+(state.topic===value?' active':'');b.dataset.value=value;
-  b.innerHTML=escape(label)+' <span class="count">'+count+'</span>';b.setAttribute('aria-pressed',String(state.topic===value));
-  b.addEventListener('click',()=>{state.topic=value;document.querySelectorAll('.chip').forEach(el=>{const active=el.dataset.value===value;el.classList.toggle('active',active);el.setAttribute('aria-pressed',String(active));});render();});return b;
-}
-function filtered(){return PROMPTS.filter(p=>(state.topic==='all'||p.topic===state.topic)&&(!state.q||(p.text+' '+p.title+' '+p.topic+' '+(p.use||'')).toLowerCase().includes(state.q.toLowerCase())));}
-function render(){
-  const list=filtered(),grid=document.getElementById('grid');grid.replaceChildren(...list.map(makeButton));
-  document.getElementById('visibleCount').textContent=list.length;document.getElementById('empty').style.display=list.length?'none':'block';
-}
-function makeButton(p){
-  const b=document.createElement('button');b.type='button';b.className='p-btn';b.dataset.promptId=p.id;
-  const mode=p.mode==='attachment'?'先加入附件':p.mode==='followup'?'接續對話或貼入資料':'填入自己的資料';
-  b.innerHTML=`<div class="p-btn-head"><span class="p-btn-topic"><span class="dot"></span>${escape(p.topic)}</span></div><h3 class="p-btn-title">${escape(p.title)}</h3><div class="p-btn-use">${mode}</div><div class="p-btn-meta"><span class="pill"><b>${fieldsOf(p).length}</b> 個欄位</span><span class="pill">${p.text.length} 字</span></div><span class="p-btn-arrow" aria-hidden="true">→</span>`;
-  b.addEventListener('click',()=>openBuilder(p));return b;
-}
-function openBuilder(p){
-  clearTimeout(toastTimer);document.getElementById('toast').classList.remove('show');document.getElementById('btnCopy').classList.remove('copied');
-  state.returnFocus=document.activeElement;state.current=p;state.values={};state.editedText=null;state.editBase='';
-  const entry=storage[p.id],legacy=p.legacyKey?storage[hash(p.legacyKey.topic+'::'+p.legacyKey.title)]:null;
-  const matching=entry && entry.version===p.version;
-  fieldsOf(p).forEach(f=>{
-    let v=f.default||'';
-    if(matching && entry.values && typeof entry.values[f.id]==='string')v=entry.values[f.id];
-    else if(!entry && legacy && f.legacyRaw && typeof legacy[f.legacyRaw]==='string')v=legacy[f.legacyRaw];
-    state.values[f.raw]=v;
-  });
-  if(entry && typeof entry.editedText==='string'){state.editedText=entry.editedText;state.editBase=typeof entry.baseText==='string'?entry.baseText:'';}
-  document.getElementById('builderEyebrow').textContent=p.topic;document.getElementById('builderTitle').textContent=p.title;
-  document.getElementById('builderMeta').textContent=fieldsOf(p).length+' 個欄位 · 可直接調整全文';
-  const prep=document.getElementById('preparation');prep.hidden=!p.preparation;prep.textContent=p.preparation||'';
-  document.getElementById('saveStatus').textContent=entry?'已恢復本機草稿':'修改後自動儲存在此瀏覽器';
-  if(entry && !matching)document.getElementById('saveStatus').textContent='模板已更新；保留全文草稿，請重新確認欄位。';
-  renderTemplate(p.text,fieldsOf(p));renderFields(fieldsOf(p));updateResult();
-  const mask=document.getElementById('modalMask');mask.classList.add('open');mask.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
-  document.getElementById('builderClose').focus();
-}
-function closeBuilder(){
-  document.getElementById('modalMask').classList.remove('open');document.getElementById('modalMask').setAttribute('aria-hidden','true');document.body.style.overflow='';
-  state.current=null;if(state.returnFocus && state.returnFocus.isConnected)state.returnFocus.focus();
-}
-function renderTemplate(text,fields){
-  const box=document.getElementById('templateBox');box.replaceChildren();const map=new Map(fields.map(f=>[f.raw,f]));
-  const re=/\[([^\[\]\n]+)\]/g;let last=0,m;
-  while((m=re.exec(text))){
-    box.appendChild(document.createTextNode(text.slice(last,m.index)));const f=map.get(m[1]);
-    if(f){const mark=document.createElement('button');mark.type='button';mark.className='ph-mark';mark.dataset.raw=f.raw;mark.textContent=f.label;mark.classList.toggle('filled',!!state.values[f.raw]?.trim());mark.addEventListener('click',()=>document.getElementById('field-'+f.id)?.focus());box.appendChild(mark);}
-    else box.appendChild(document.createTextNode(m[0]));last=re.lastIndex;
-  }
-  box.appendChild(document.createTextNode(text.slice(last)));
-}
-function renderFields(fields){
-  const list=document.getElementById('fieldsList');list.replaceChildren();document.getElementById('fieldCountHint').textContent=fields.length+' 個';
-  if(!fields.length){const n=document.createElement('div');n.className='no-fields';n.textContent=state.current.mode==='attachment'?'先將附件加入 AI 對話，再複製提示詞。':'此任務可產生空白模板，也可在右側直接調整全文。';list.appendChild(n);return;}
-  fields.forEach((f,i)=>{
-    const group=document.createElement('div');group.className='field-group';const id='field-'+f.id,value=state.values[f.raw]||'';
-    const label=document.createElement('label');label.className='field-label';label.htmlFor=id;
-    label.innerHTML=`<span class="num">${i+1}</span><span>${escape(f.label)} <small>${f.required?'必填':'選填'}</small></span>`;
-    let input;
-    if(f.type==='select'){
-      input=document.createElement('select');input.className='field-select';input.appendChild(new Option('— 請選擇 —',''));(f.options||[]).forEach(o=>input.appendChild(new Option(o,o)));input.value=value;
-    }else{
-      input=document.createElement(f.type==='textarea'?'textarea':'input');input.className=f.type==='textarea'?'field-textarea':'field-input';if(f.type==='textarea')input.rows=3;else input.type='text';input.value=value;input.placeholder=f.placeholder||'填入你的內容';
-    }
-    input.id=id;input.dataset.raw=f.raw;input.setAttribute('aria-required',String(f.required));input.addEventListener('input',onFieldInput);input.addEventListener('change',onFieldInput);
-    group.append(label,input);list.appendChild(group);
-  });
-}
-function onFieldInput(e){if(!state.current)return;state.values[e.target.dataset.raw]=e.target.value;updateResult();saveDraft();}
-function generateText(p,values){
-  const map=new Map(fieldsOf(p).map(f=>[f.raw,f]));let lines=p.text.split('\n');
-  // An empty optional input omits its own label and value, not nearby task instructions.
-  const omit=new Set();
-  lines.forEach((line,i)=>{
-    const tokens=[...line.matchAll(/\[([^\[\]\n]+)\]/g)];
-    if(tokens.length===1){const f=map.get(tokens[0][1]);if(f && !f.required && !(values[f.raw]||'').trim()){
-      omit.add(i);if(line.trim()==='['+f.raw+']' && i>0 && lines[i-1].trim().endsWith('：'))omit.add(i-1);
-    }}
-  });
-  return lines.filter((_,i)=>!omit.has(i)).join('\n').replace(/\[([^\[\]\n]+)\]/g,(full,raw)=>{
-    const f=map.get(raw);if(!f)return full;const v=(values[raw]||'').trim();return v||full;
-  }).replace(/\n{3,}/g,'\n\n').trim();
-}
-function updateResult(){
-  if(!state.current)return;state.generatedText=generateText(state.current,state.values);
-  const editor=document.getElementById('resultBox');if(state.editedText===null){editor.value=state.generatedText;state.editBase=state.generatedText;}
-  else if(editor.value!==state.editedText)editor.value=state.editedText;
-  document.querySelectorAll('.ph-mark[data-raw]').forEach(el=>el.classList.toggle('filled',!!(state.values[el.dataset.raw]||'').trim()));
-  const required=fieldsOf(state.current).filter(f=>f.required),groups=state.current.requiredGroups||[];
-  const needed=required.length+groups.reduce((n,g)=>n+g.min,0),filled=required.filter(f=>(state.values[f.raw]||'').trim()).length+groups.reduce((n,g)=>n+Math.min(g.min,g.fields.filter(raw=>(state.values[raw]||'').trim()).length),0);
-  document.getElementById('progressHint').textContent=needed?filled+' / '+needed:state.current.mode==='attachment'?'需先加入附件':'無必填欄位';
-  document.getElementById('progressFill').style.width=(needed?Math.round(filled/needed*100):0)+'%';
-  const pending=state.editedText!==null && state.editBase!==state.generatedText;
-  document.getElementById('btnApply').hidden=!pending;
-  document.getElementById('editStatus').textContent=pending?'欄位已更新；目前全文修改已保留。按「套用最新欄位」才會重新合併。':state.editedText!==null?'已手動調整全文；複製與下載使用目前文字。':'填寫欄位會即時合併；也可直接修改全文。';
-  document.getElementById('footProgress').textContent=state.editedText!==null?'全文已自訂，請確認必要資訊':needed?'必要資訊已填 '+filled+' / '+needed:state.current.mode==='attachment'?'請確認附件已加入 AI 對話':'依使用提示準備資料';
-}
-function onResultInput(){
-  if(!state.current)return;const text=document.getElementById('resultBox').value;
-  if(state.editedText===null)state.editBase=state.generatedText;
-  state.editedText=text===state.generatedText?null:text;updateResult();saveDraft();
-}
-function restoreMerged(){
-  if(!state.current)return;
-  if(state.editedText!==null && !window.confirm('這會用目前欄位重新合併，覆蓋右側全文修改。要繼續嗎？'))return;
-  state.editedText=null;updateResult();saveDraft();showToast('已套用目前欄位，還原合併結果');
-}
-function resetFields(){
-  if(!state.current)return;state.values={};renderFields(fieldsOf(state.current));updateResult();saveDraft();showToast(state.editedText!==null?'已清空欄位；全文修改仍保留':'已清空欄位');
-}
-function currentText(){
-  if(!state.current)return null;const text=document.getElementById('resultBox').value;
-  if(!text.trim()){showToast('目前提示詞是空白，請先填寫或編輯');document.getElementById('resultBox').focus();return null;}
-  const missing=fieldsOf(state.current).filter(f=>f.required && !(state.values[f.raw]||'').trim() && text.includes('['+f.raw+']'));
-  if(missing.length){showToast('尚缺：'+missing.map(f=>f.label).join('、')+'。可填左側欄位或直接修改全文。');return null;}
-  if(state.editedText===null){const group=(state.current.requiredGroups||[]).find(g=>g.fields.filter(raw=>(state.values[raw]||'').trim()).length<g.min);if(group){showToast(group.label);return null;}}
-  return text;
-}
-async function copyResult(btn){
-  const text=currentText();if(text===null)return;
-  try{
-    if(navigator.clipboard && window.isSecureContext)await navigator.clipboard.writeText(text);
-    else fallbackCopy(text);
-    showToast('已複製目前提示詞（'+text.length+' 字）');btn.classList.add('copied');setTimeout(()=>btn.classList.remove('copied'),1600);
-  }catch(e){
-    try{fallbackCopy(text);showToast('已複製目前提示詞（'+text.length+' 字）');}
-    catch(e2){document.getElementById('resultBox').focus();document.getElementById('resultBox').select();showToast('自動複製未成功，文字已選取，請手動複製');}
-  }
-}
-function fallbackCopy(text){const ta=document.createElement('textarea');ta.value=text;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{if(!document.execCommand('copy'))throw new Error('copy failed');}finally{ta.remove();}}
-function downloadResult(){
-  const text=currentText();if(text===null)return;const blob=new Blob([text],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
-  a.href=url;a.download=state.current.title.replace(/[^\u4e00-\u9fffA-Za-z0-9-_]/g,'_').slice(0,60)+'.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);showToast('已下載目前提示詞');
-}
-let toastTimer;
-function showToast(msg){const t=document.getElementById('toast');document.getElementById('toastText').textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),4000);}
-document.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('allCount').textContent=PROMPTS.length;buildFilters();render();
-  const search=document.getElementById('search'),clear=document.getElementById('searchClear');
-  search.addEventListener('input',e=>{state.q=e.target.value.trim();clear.style.display=state.q?'block':'none';render();});
-  clear.addEventListener('click',()=>{search.value='';state.q='';clear.style.display='none';search.focus();render();});
-  document.getElementById('builderClose').addEventListener('click',closeBuilder);
-  document.getElementById('modalMask').addEventListener('click',e=>{if(e.target.id==='modalMask')closeBuilder();});
-  document.getElementById('btnReset').addEventListener('click',resetFields);
-  document.getElementById('btnApply').addEventListener('click',restoreMerged);document.getElementById('btnRestore').addEventListener('click',restoreMerged);
-  document.getElementById('resultBox').addEventListener('input',onResultInput);
-  document.getElementById('btnCopy').addEventListener('click',e=>copyResult(e.currentTarget));document.getElementById('btnDownload').addEventListener('click',downloadResult);
-  document.addEventListener('keydown',e=>{
-    if(state.current){
-      if(e.key==='Escape'){closeBuilder();return;}
-      if(e.key==='Tab'){
-        const focusables=[...document.querySelectorAll('.builder button,.builder input,.builder select,.builder textarea')].filter(el=>!el.hidden && !el.disabled && el.getClientRects().length);
-        const first=focusables[0],last=focusables[focusables.length-1];if(e.shiftKey && document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey && document.activeElement===last){e.preventDefault();first.focus();}
-      }
-    }else if(e.key==='/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName) && !document.activeElement.isContentEditable){e.preventDefault();search.focus();}
-  });
-});
-</script>
+            <div class="bg-white rounded-xl shadow-sm border border-muji-border p-4 flex flex-col">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-lg font-bold text-muji-text flex items-center gap-2">
+                        <span>🔷</span> 節點清單管理
+                    </h2>
+                    <span id="node-count" class="text-xs bg-muji-chip text-muji-subtext px-2 py-1 rounded-full font-medium">0 個節點</span>
+                </div>
+                
+                <div class="overflow-x-auto max-h-72 border border-muji-border rounded-lg mb-3">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-muji-surface text-muji-text font-semibold border-b border-muji-border">
+                                <th class="p-2">識別 ID</th>
+                                <th class="p-2">名稱</th>
+                                <th class="p-2">負責角色</th>
+                                <th class="p-2 text-right">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="node-table-body" class="divide-y divide-muji-border">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Add / Edit Node Form -->
+                <form id="node-form" onsubmit="app.handleNodeSubmit(event)" class="bg-muji-surface p-3 rounded-lg border border-muji-border space-y-3">
+                    <input type="hidden" id="node-edit-index" value="-1">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-medium text-muji-text mb-1">唯一識別 (ID)*</label>
+                            <input type="text" id="node-id" required placeholder="例: N1" class="w-full text-xs p-2 border border-muji-border rounded-md bg-white text-muji-text focus:border-muji-wine">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-muji-text mb-1">節點名稱*</label>
+                            <input type="text" id="node-name" required placeholder="例: 提出需求" class="w-full text-xs p-2 border border-muji-border rounded-md bg-white text-muji-text focus:border-muji-wine">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-muji-text mb-1">負責角色*</label>
+                        <input type="text" id="node-role" required placeholder="例: 承辦人" class="w-full text-xs p-2 border border-muji-border rounded-md bg-white text-muji-text focus:border-muji-wine">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-muji-text mb-1">工作說明*</label>
+                        <textarea id="node-desc" required rows="2" placeholder="詳細描述此步驟之工作內容..." class="w-full text-xs p-2 border border-muji-border rounded-md bg-white text-muji-text focus:border-muji-wine resize-none"></textarea>
+                    </div>
+                    <div class="flex justify-end gap-2 pt-1">
+                        <button type="button" id="node-cancel-btn" onclick="app.resetNodeForm()" class="hidden bg-stone-200 hover:bg-stone-300 text-stone-700 text-xs px-3 py-1.5 rounded-md font-medium transition">取消</button>
+                        <button type="submit" id="node-submit-btn" class="bg-muji-wine hover:bg-muji-wineDark text-white text-xs px-4 py-1.5 rounded-md font-medium transition shadow-sm">新增節點</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-muji-border p-4 flex flex-col">
+                <div class="flex justify-between items-center mb-3">
+                    <h2 class="text-lg font-bold text-muji-text flex items-center gap-2">
+                        <span>↗️</span> 連線清單管理
+                    </h2>
+                    <span id="edge-count" class="text-xs bg-muji-chip text-muji-subtext px-2 py-1 rounded-full font-medium">0 條連線</span>
+                </div>
+                
+                <div class="overflow-x-auto max-h-64 border border-muji-border rounded-lg mb-3">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-muji-surface text-muji-text font-semibold border-b border-muji-border">
+                                <th class="p-2">起點</th>
+                                <th class="p-2">終點</th>
+                                <th class="p-2">轉換條件</th>
+                                <th class="p-2 text-right">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="edge-table-body" class="divide-y divide-muji-border">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Add / Edit Edge Form -->
+                <form id="edge-form" onsubmit="app.handleEdgeSubmit(event)" class="bg-muji-surface p-3 rounded-lg border border-muji-border space-y-3">
+                    <input type="hidden" id="edge-edit-index" value="-1">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-xs font-medium text-muji-text mb-1">起點 (Source)*</label>
+                            <select id="edge-from" required class="w-full text-xs p-2 border border-muji-border rounded-md bg-white text-muji-text focus:border-muji-wine">
+                                <option value="">請選擇起點</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-muji-text mb-1">終點 (Target)*</label>
+                            <select id="edge-to" required class="w-full text-xs p-2 border border-muji-border rounded-md bg-white text-muji-text focus:border-muji-wine">
+                                <option value="">請選擇終點</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-muji-text mb-1">轉換條件 / 結果文字*</label>
+                        <input type="text" id="edge-condition" required placeholder="例: 同意 / 補件 / 條件完整" class="w-full text-xs p-2 border border-muji-border rounded-md bg-white text-muji-text focus:border-muji-wine">
+                    </div>
+                    <div class="flex justify-end gap-2 pt-1">
+                        <button type="button" id="edge-cancel-btn" onclick="app.resetEdgeForm()" class="hidden bg-stone-200 hover:bg-stone-300 text-stone-700 text-xs px-3 py-1.5 rounded-md font-medium transition">取消</button>
+                        <button type="submit" id="edge-submit-btn" class="bg-muji-wine hover:bg-muji-wineDark text-white text-xs px-4 py-1.5 rounded-md font-medium transition shadow-sm">新增連線</button>
+                    </div>
+                </form>
+            </div>
+
+        </section>
+
+        <!-- Right Panel: SVG Workflow Canvas and Inspection Details (7 Cols on large screen) -->
+        <section class="lg:col-span-7 flex flex-col gap-6">
+            
+            <div class="bg-white rounded-xl shadow-sm border border-muji-border p-4 flex flex-col flex-1 min-h-[450px]">
+                <div class="flex justify-between items-center mb-3 pb-2 border-b border-muji-border flex-wrap gap-2">
+                    <h2 class="text-lg font-bold text-muji-text flex items-center gap-2">
+                        <span>🗺️</span> 流程圖視覺化預覽
+                    </h2>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <div class="text-xs text-muji-subtext flex items-center gap-3">
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-[#FAF7F2] border border-[#7F2629] rounded-sm inline-block"></span> 一般節點</span>
+                            <span class="flex items-center gap-1"><span class="w-3 h-3 bg-[#F3EFEA] border border-[#5A6351] rounded-sm inline-block"></span> 終點/出口</span>
+                        </div>
+                        <button onclick="app.downloadTransparentPNG()" class="bg-stone-700 hover:bg-stone-800 text-white px-3 py-1.5 rounded-lg text-xs font-medium transition shadow-sm flex items-center gap-1.5">
+                            <span>📥</span> 下載透明去背 PNG
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SVG Container -->
+                <div id="svg-container" class="relative flex-1 w-full bg-muji-cream/60 rounded-lg border border-muji-border overflow-hidden min-h-[380px] flex items-center justify-center">
+                    <div id="svg-empty-state" class="text-center p-6 text-muji-subtext">
+                        <div class="text-4xl mb-2">📊</div>
+                        <p class="text-sm">尚未建立節點與連線，或驗證發生錯誤。請在左側新增資料或載入上方範例。</p>
+                    </div>
+                    <!-- Dynamic SVG will be rendered here -->
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm border border-muji-border p-4">
+                <h2 class="text-lg font-bold text-muji-text flex items-center gap-2 mb-3 pb-2 border-b border-muji-border">
+                    <span>🔍</span> 節點工作說明與詳情檢視
+                </h2>
+                <div id="node-detail-panel" class="bg-muji-surface p-4 rounded-lg border border-muji-border min-h-[110px] text-sm">
+                    <p class="text-muji-subtext text-center py-4">請點擊流程圖中的節點，或使用鍵盤聚焦並按下 Enter/空白鍵來檢視該節點的完整工作說明與詳細角色資訊。</p>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-muji-border py-3 text-center text-xs text-muji-subtext mt-auto">
+        繁體中文採購申請流程圖產生器 &bull; 單頁純前端實作 &bull; 支援完整驗證、SVG 互動與透明 PNG 下載
+    </footer>
+
+    <script>
+        class WorkflowApp {
+            constructor() {
+                // Initial data state (empty by default)
+                this.nodes = [];
+                this.edges = [];
+                this.selectedNodeId = null;
+
+                // Bind methods
+                this.init();
+            }
+
+            init() {
+                this.render();
+            }
+
+            // Case A loader
+            loadCaseA() {
+                this.nodes = [
+                    { id: "N1", name: "收件", role: "承辦", description: "接收相關採購申請文件與收件作業。" },
+                    { id: "N2", name: "核對", role: "覆核", description: "核對收件資料與各項規格項目。" },
+                    { id: "N3", name: "補件", role: "申請人", description: "針對不足之處進行文件補齊作業。" },
+                    { id: "N4", name: "結案", role: "承辦", description: "確認流程完整無誤後正式結案。" }
+                ];
+                this.edges = [
+                    { from: "N1", to: "N2", condition: "收件" },
+                    { from: "N2", to: "N3", condition: "條件缺項" },
+                    { from: "N3", to: "N2", condition: "條件補齊" },
+                    { from: "N2", to: "N4", condition: "條件完整" }
+                ];
+                this.selectedNodeId = null;
+                this.render();
+            }
+
+            // Case B loader
+            loadCaseB() {
+                this.nodes = [
+                    { id: "X1", name: "提出需求", role: "承辦人", description: "提出採購需求並填寫相關明細。" },
+                    { id: "X2", name: "確認內容", role: "審核人", description: "確認採購內容是否正確。" },
+                    { id: "X3", name: "完成", role: "主管", description: "流程辦理完成。" }
+                ];
+                this.edges = [
+                    { from: "X1", to: "X2", condition: "提出" },
+                    { from: "X2", to: "X3", condition: "條件確認" }
+                ];
+                this.selectedNodeId = null;
+                this.render();
+            }
+
+            // Exception Case loader (Testing non-existent target X4 and potential duplicate detection)
+            loadExceptionCase() {
+                this.loadCaseB();
+                // Intentionally add an edge pointing to non-existent X4 to trigger validation error
+                this.edges.push({ from: "X3", to: "X4", condition: "異常跳轉" });
+                this.render();
+            }
+
+            clearAllData() {
+                this.nodes = [];
+                this.edges = [];
+                this.selectedNodeId = null;
+                this.render();
+            }
+
+            // Validation logic checking errors (including duplicate IDs and non-existent targets/sources)
+            validate() {
+                const errors = [];
+                const nodeIds = new Set();
+
+                // Check nodes for duplicates and missing fields
+                this.nodes.forEach((node, idx) => {
+                    if (!node.id || node.id.trim() === "") {
+                        errors.push(`第 ${idx + 1} 個節點缺少唯一識別 (ID)。`);
+                    } else {
+                        if (nodeIds.has(node.id)) {
+                            errors.push(`偵測到重複識別碼 「${node.id}」，重複識別碼不得繪成圖表。`);
+                        }
+                        nodeIds.add(node.id);
+                    }
+                    if (!node.name || node.name.trim() === "") {
+                        errors.push(`節點 「${node.id || idx + 1}」 缺少名稱。`);
+                    }
+                    if (!node.role || node.role.trim() === "") {
+                        errors.push(`節點 「${node.id || node.name || idx + 1}」 缺少負責角色。`);
+                    }
+                    if (!node.description || node.description.trim() === "") {
+                        errors.push(`節點 「${node.id || node.name || idx + 1}」 缺少工作說明。`);
+                    }
+                });
+
+                // Check edges for missing endpoints or non-existent target/source nodes
+                this.edges.forEach((edge, idx) => {
+                    if (!edge.from || !nodeIds.has(edge.from)) {
+                        errors.push(`第 ${idx + 1} 條連線的起點 「${edge.from || '未指定'}」 不存在。`);
+                    }
+                    if (!edge.to || !nodeIds.has(edge.to)) {
+                        errors.push(`第 ${idx + 1} 條連線的終點 「${edge.to || '未指定'}」 不存在（未知節點）。`);
+                    }
+                    if (!edge.condition || edge.condition.trim() === "") {
+                        errors.push(`第 ${idx + 1} 條連線缺少轉換條件。`);
+                    }
+                });
+
+                return errors;
+            }
+
+            // Node Form Submit Handler (Add or Update)
+            handleNodeSubmit(event) {
+                event.preventDefault();
+                const editIndex = parseInt(document.getElementById("node-edit-index").value);
+                const id = document.getElementById("node-id").value.trim();
+                const name = document.getElementById("node-name").value.trim();
+                const role = document.getElementById("node-role").value.trim();
+                const description = document.getElementById("node-desc").value.trim();
+
+                const newNode = { id, name, role, description };
+
+                if (editIndex === -1) {
+                    if (this.nodes.some(n => n.id === id)) {
+                        alert(`節點識別 「${id}」 已存在，無法重複新增。`);
+                        return;
+                    }
+                    this.nodes.push(newNode);
+                } else {
+                    if (this.nodes[editIndex].id !== id && this.nodes.some(n => n.id === id)) {
+                        alert(`節點識別 「${id}」 已存在，無法修改為此識別。`);
+                        return;
+                    }
+                    const oldId = this.nodes[editIndex].id;
+                    this.nodes[editIndex] = newNode;
+                    if (oldId !== id) {
+                        this.edges.forEach(e => {
+                            if (e.from === oldId) e.from = id;
+                            if (e.to === oldId) e.to = id;
+                        });
+                    }
+                }
+
+                this.resetNodeForm();
+                this.render();
+            }
+
+            resetNodeForm() {
+                document.getElementById("node-form").reset();
+                document.getElementById("node-edit-index").value = "-1";
+                document.getElementById("node-submit-btn").innerText = "新增節點";
+                document.getElementById("node-cancel-btn").classList.add("hidden");
+                document.getElementById("node-id").disabled = false;
+            }
+
+            editNode(index) {
+                const node = this.nodes[index];
+                document.getElementById("node-edit-index").value = index;
+                document.getElementById("node-id").value = node.id;
+                document.getElementById("node-id").disabled = true;
+                document.getElementById("node-name").value = node.name;
+                document.getElementById("node-role").value = node.role;
+                document.getElementById("node-desc").value = node.description;
+                document.getElementById("node-submit-btn").innerText = "更新節點";
+                document.getElementById("node-cancel-btn").classList.remove("hidden");
+            }
+
+            deleteNode(index) {
+                const nodeId = this.nodes[index].id;
+                this.nodes.splice(index, 1);
+                this.edges = this.edges.filter(e => e.from !== nodeId && e.to !== nodeId);
+                if (this.selectedNodeId === nodeId) {
+                    this.selectedNodeId = null;
+                }
+                this.render();
+            }
+
+            // Edge Form Submit Handler (Add or Update)
+            handleEdgeSubmit(event) {
+                event.preventDefault();
+                const editIndex = parseInt(document.getElementById("edge-edit-index").value);
+                const from = document.getElementById("edge-from").value;
+                const to = document.getElementById("edge-to").value;
+                const condition = document.getElementById("edge-condition").value.trim();
+
+                const newEdge = { from, to, condition };
+
+                if (editIndex === -1) {
+                    this.edges.push(newEdge);
+                } else {
+                    this.edges[editIndex] = newEdge;
+                }
+
+                this.resetEdgeForm();
+                this.render();
+            }
+
+            resetEdgeForm() {
+                document.getElementById("edge-form").reset();
+                document.getElementById("edge-edit-index").value = "-1";
+                document.getElementById("edge-submit-btn").innerText = "新增連線";
+                document.getElementById("edge-cancel-btn").classList.add("hidden");
+            }
+
+            editEdge(index) {
+                const edge = this.edges[index];
+                document.getElementById("edge-edit-index").value = index;
+                document.getElementById("edge-from").value = edge.from;
+                document.getElementById("edge-to").value = edge.to;
+                document.getElementById("edge-condition").value = edge.condition;
+                document.getElementById("edge-submit-btn").innerText = "更新連線";
+                document.getElementById("edge-cancel-btn").classList.remove("hidden");
+            }
+
+            deleteEdge(index) {
+                this.edges.splice(index, 1);
+                this.render();
+            }
+
+            selectNode(nodeId) {
+                this.selectedNodeId = nodeId;
+                this.renderNodeDetail();
+                this.highlightSelectedNodeElement();
+            }
+
+            highlightSelectedNodeElement() {
+                document.querySelectorAll(".node-rect").forEach(el => {
+                    if (el.getAttribute("data-node-id") === this.selectedNodeId) {
+                        el.setAttribute("stroke", "#2563eb");
+                        el.setAttribute("stroke-width", "3");
+                    } else {
+                        el.setAttribute("stroke", "#cbd5e1");
+                        el.setAttribute("stroke-width", "1.5");
+                    }
+                });
+            }
+
+            renderNodeDetail() {
+                const panel = document.getElementById("node-detail-panel");
+                if (!this.selectedNodeId) {
+                    panel.innerHTML = `<p class="text-muji-subtext text-center py-4">請點擊流程圖中的節點，或使用鍵盤聚焦並按下 Enter/空白鍵來檢視該節點的工作說明與詳細角色資訊。</p>`;
+                    return;
+                }
+
+                const node = this.nodes.find(n => n.id === this.selectedNodeId);
+                if (!node) {
+                    panel.innerHTML = `<p class="text-muji-subtext text-center py-4">找不到該節點資訊。</p>`;
+                    return;
+                }
+
+                const incoming = this.edges.filter(e => e.to === node.id);
+                const outgoing = this.edges.filter(e => e.from === node.id);
+
+                let html = `
+                    <div class="flex flex-col gap-2">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs bg-muji-wine/10 text-muji-wine font-bold px-2 py-0.5 rounded">${node.id}</span>
+                                <h3 class="font-bold text-muji-text text-base mt-1">${node.name}</h3>
+                            </div>
+                            <span class="text-xs bg-muji-chip text-muji-text px-2 py-1 rounded-md font-medium">負責角色: ${node.role}</span>
+                        </div>
+                        <div class="bg-white p-2.5 rounded border border-muji-border mt-1">
+                            <span class="text-xs font-semibold text-muji-subtext block mb-0.5">工作說明：</span>
+                            <p class="text-muji-text text-xs leading-relaxed whitespace-pre-wrap">${node.description}</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-1 text-xs text-muji-subtext">
+                            <div><span class="font-semibold text-muji-text">前置輸入來源：</span> ${incoming.length > 0 ? incoming.map(e => `${e.from} (${e.condition})`).join(', ') : '無 (起始點)'}</div>
+                            <div><span class="font-semibold text-muji-text">後續輸出分支：</span> ${outgoing.length > 0 ? outgoing.map(e => `${e.to} (${e.condition})`).join(', ') : '無 (終點)'}</div>
+                        </div>
+                    </div>
+                `;
+                panel.innerHTML = html;
+            }
+
+            renderNodeTable() {
+                const tbody = document.getElementById("node-table-body");
+                const countBadge = document.getElementById("node-count");
+                countBadge.innerText = `${this.nodes.length} 個節點`;
+
+                if (this.nodes.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-muji-subtext">尚無節點資料</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = this.nodes.map((n, idx) => `
+                    <tr class="hover:bg-muji-surface transition">
+                        <td class="p-2 font-mono font-medium text-muji-wine">${n.id}</td>
+                        <td class="p-2 font-medium text-muji-text">${n.name}</td>
+                        <td class="p-2 text-muji-subtext">${n.role}</td>
+                        <td class="p-2 text-right space-x-1">
+                            <button onclick="app.editNode(${idx})" class="text-muji-wine hover:text-muji-wineDark font-medium px-1.5 py-0.5 rounded">編輯</button>
+                            <button onclick="app.deleteNode(${idx})" class="text-stone-500 hover:text-stone-800 font-medium px-1.5 py-0.5 rounded">刪除</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            renderEdgeTable() {
+                const tbody = document.getElementById("edge-table-body");
+                const countBadge = document.getElementById("edge-count");
+                countBadge.innerText = `${this.edges.length} 條連線`;
+
+                if (this.edges.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-muji-subtext">尚無連線資料</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = this.edges.map((e, idx) => `
+                    <tr class="hover:bg-muji-surface transition">
+                        <td class="p-2 font-mono text-muji-text">${e.from}</td>
+                        <td class="p-2 font-mono text-muji-text">${e.to}</td>
+                        <td class="p-2 text-muji-text font-medium">${e.condition}</td>
+                        <td class="p-2 text-right space-x-1">
+                            <button onclick="app.editEdge(${idx})" class="text-muji-wine hover:text-muji-wineDark font-medium px-1.5 py-0.5 rounded">編輯</button>
+                            <button onclick="app.deleteEdge(${idx})" class="text-stone-500 hover:text-stone-800 font-medium px-1.5 py-0.5 rounded">刪除</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            renderEdgeTable() {
+                const tbody = document.getElementById("edge-table-body");
+                const countBadge = document.getElementById("edge-count");
+                countBadge.innerText = `${this.edges.length} 條連線`;
+
+                if (this.edges.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400">尚無連線資料</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = this.edges.map((e, idx) => `
+                    <tr class="hover:bg-slate-50 transition">
+                        <td class="p-2 font-mono text-slate-700">${e.from}</td>
+                        <td class="p-2 font-mono text-slate-700">${e.to}</td>
+                        <td class="p-2 text-slate-800 font-medium">${e.condition}</td>
+                        <td class="p-2 text-right space-x-1">
+                            <button onclick="app.editEdge(${idx})" class="text-indigo-600 hover:text-indigo-800 font-medium px-1.5 py-0.5 rounded">編輯</button>
+                            <button onclick="app.deleteEdge(${idx})" class="text-rose-600 hover:text-rose-800 font-medium px-1.5 py-0.5 rounded">刪除</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            updateEdgeSelectOptions() {
+                const fromSelect = document.getElementById("edge-from");
+                const toSelect = document.getElementById("edge-to");
+                
+                const currentFrom = fromSelect.value;
+                const currentTo = toSelect.value;
+
+                let optionsHtml = `<option value="">請選擇節點</option>` + this.nodes.map(n => `<option value="${n.id}">${n.id}: ${n.name}</option>`).join('');
+
+                fromSelect.innerHTML = optionsHtml;
+                toSelect.innerHTML = optionsHtml;
+
+                fromSelect.value = currentFrom;
+                toSelect.value = currentTo;
+            }
+
+            renderSvgFlowchart() {
+                const container = document.getElementById("svg-container");
+                const emptyState = document.getElementById("svg-empty-state");
+
+                // If validation errors exist, do NOT render flowchart graph to prevent broken visuals
+                const errors = this.validate();
+                if (errors.length > 0 || this.nodes.length === 0) {
+                    emptyState.classList.remove("hidden");
+                    if (errors.length > 0) {
+                        emptyState.innerHTML = `<div class="text-4xl mb-2">⚠️</div><p class="text-sm font-bold text-muji-wine">資料驗證失敗，無法繪製圖表。請修正上方紅色錯誤提示。</p>`;
+                    } else {
+                        emptyState.innerHTML = `<div class="text-4xl mb-2">📊</div><p class="text-sm">尚未建立節點與連線。請在左側新增資料或載入上方範例。</p>`;
+                    }
+                    const oldSvg = container.querySelector("svg");
+                    if (oldSvg) oldSvg.remove();
+                    return;
+                }
+
+                emptyState.classList.add("hidden");
+                const oldSvg = container.querySelector("svg");
+                if (oldSvg) oldSvg.remove();
+
+                const nodeCoords = this.calculateLayoutCoordinates();
+
+                let maxX = 600, maxY = 400;
+                Object.values(nodeCoords.coords).forEach(coord => {
+                    if (coord.x + 180 > maxX) maxX = coord.x + 180;
+                    if (coord.y + 100 > maxY) maxY = coord.y + 100;
+                });
+
+                const svgWidth = Math.max(700, maxX + 50);
+                const svgHeight = Math.max(450, maxY + 50);
+
+                const svgNS = "http://www.w3.org/2000/svg";
+                const svg = document.createElementNS(svgNS, "svg");
+                svg.setAttribute("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
+                svg.setAttribute("class", "w-full h-full max-h-[500px] select-none");
+
+                const defs = document.createElementNS(svgNS, "defs");
+                const marker = document.createElementNS(svgNS, "marker");
+                marker.setAttribute("id", "arrow");
+                marker.setAttribute("viewBox", "0 0 10 10");
+                marker.setAttribute("refX", "22");
+                marker.setAttribute("refY", "5");
+                marker.setAttribute("markerWidth", "6");
+                marker.setAttribute("markerHeight", "6");
+                marker.setAttribute("orient", "auto-start-reverse");
+
+                const path = document.createElementNS(svgNS, "path");
+                path.setAttribute("d", "M 0 1 L 10 5 L 0 9 z");
+                path.setAttribute("fill", "#5C5652");
+                marker.appendChild(path);
+                defs.appendChild(marker);
+                svg.appendChild(defs);
+
+                // Draw Edges (Links)
+                this.edges.forEach(edge => {
+                    const fromCoord = nodeCoords.coords[edge.from];
+                    const toCoord = nodeCoords.coords[edge.to];
+                    if (!fromCoord || !toCoord) return;
+
+                    const nodeWidth = 150;
+                    const nodeHeight = 65;
+
+                    const isBackwardLoop = fromCoord.x > toCoord.x;
+
+                    let x1, y1, x2, y2, pathD;
+
+                    if (isBackwardLoop) {
+                        x1 = fromCoord.x + nodeWidth / 2;
+                        y1 = fromCoord.y;
+                        x2 = toCoord.x + nodeWidth / 2;
+                        y2 = toCoord.y;
+
+                        const arcY = Math.min(y1, y2) - 40;
+                        pathD = `M ${x1} ${y1} C ${x1} ${arcY}, ${x2} ${arcY}, ${x2} ${y2}`;
+
+                        const edgePath = document.createElementNS(svgNS, "path");
+                        edgePath.setAttribute("d", pathD);
+                        edgePath.setAttribute("fill", "none");
+                        edgePath.setAttribute("stroke", "#A23B3E");
+                        edgePath.setAttribute("stroke-width", "2");
+                        edgePath.setAttribute("stroke-dasharray", "4,3");
+                        edgePath.setAttribute("marker-end", "url(#arrow)");
+                        svg.appendChild(edgePath);
+
+                        const midX = (x1 + x2) / 2;
+                        const midY = arcY + 12;
+
+                        const bgRect = document.createElementNS(svgNS, "rect");
+                        const textLen = edge.condition.length * 12 + 10;
+                        bgRect.setAttribute("x", midX - textLen / 2);
+                        bgRect.setAttribute("y", midY - 9);
+                        bgRect.setAttribute("width", textLen);
+                        bgRect.setAttribute("height", "18");
+                        bgRect.setAttribute("rx", "4");
+                        bgRect.setAttribute("fill", "#FAF7F2");
+                        bgRect.setAttribute("stroke", "#E5E0D8");
+                        bgRect.setAttribute("stroke-width", "1");
+                        svg.appendChild(bgRect);
+
+                        const text = document.createElementNS(svgNS, "text");
+                        text.setAttribute("x", midX);
+                        text.setAttribute("y", midY + 4);
+                        text.setAttribute("text-anchor", "middle");
+                        text.setAttribute("class", "text-[11px] font-medium fill-[#7F2629]");
+                        text.textContent = edge.condition;
+                        svg.appendChild(text);
+
+                    } else {
+                        x1 = fromCoord.x + nodeWidth / 2;
+                        y1 = fromCoord.y + nodeHeight / 2;
+                        x2 = toCoord.x + nodeWidth / 2;
+                        y2 = toCoord.y + nodeHeight / 2;
+
+                        const line = document.createElementNS(svgNS, "line");
+                        line.setAttribute("x1", x1);
+                        line.setAttribute("y1", y1);
+                        line.setAttribute("x2", x2);
+                        line.setAttribute("y2", y2);
+                        line.setAttribute("stroke", "#5C5652");
+                        line.setAttribute("stroke-width", "2");
+                        line.setAttribute("marker-end", "url(#arrow)");
+                        svg.appendChild(line);
+
+                        const midX = (x1 + x2) / 2;
+                        const midY = (y1 + y2) / 2 - 10;
+
+                        const bgRect = document.createElementNS(svgNS, "rect");
+                        const textLen = edge.condition.length * 12 + 10;
+                        bgRect.setAttribute("x", midX - textLen / 2);
+                        bgRect.setAttribute("y", midY - 9);
+                        bgRect.setAttribute("width", textLen);
+                        bgRect.setAttribute("height", "18");
+                        bgRect.setAttribute("rx", "4");
+                        bgRect.setAttribute("fill", "#FFFFFF");
+                        bgRect.setAttribute("stroke", "#E5E0D8");
+                        bgRect.setAttribute("stroke-width", "1");
+                        svg.appendChild(bgRect);
+
+                        const text = document.createElementNS(svgNS, "text");
+                        text.setAttribute("x", midX);
+                        text.setAttribute("y", midY + 4);
+                        text.setAttribute("text-anchor", "middle");
+                        text.setAttribute("class", "text-[11px] font-medium fill-[#2D2B2A]");
+                        text.textContent = edge.condition;
+                        svg.appendChild(text);
+                    }
+                });
+
+                // Draw Nodes
+                this.nodes.forEach(node => {
+                    const coord = nodeCoords.coords[node.id];
+                    if (!coord) return;
+
+                    const g = document.createElementNS(svgNS, "g");
+                    g.setAttribute("class", "focusable-node cursor-pointer group");
+                    g.setAttribute("tabindex", "0");
+                    g.setAttribute("aria-label", `節點: ${node.name}, 角色: ${node.role}`);
+                    
+                    g.addEventListener("click", () => this.selectNode(node.id));
+                    g.addEventListener("keydown", (e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                            e.preventDefault();
+                            this.selectNode(node.id);
+                        }
+                    });
+
+                    const nodeWidth = 150;
+                    const nodeHeight = 65;
+
+                    const isEndNode = !this.edges.some(e => e.from === node.id);
+
+                    const rect = document.createElementNS(svgNS, "rect");
+                    rect.setAttribute("x", coord.x);
+                    rect.setAttribute("y", coord.y);
+                    rect.setAttribute("width", nodeWidth);
+                    rect.setAttribute("height", nodeHeight);
+                    rect.setAttribute("rx", "8");
+                    rect.setAttribute("data-node-id", node.id);
+                    rect.setAttribute("class", `node-rect transition-all ${this.selectedNodeId === node.id ? 'stroke-[#7F2629] stroke-[3]' : 'stroke-[#D8D2C7] stroke-[1.5]'}`);
+                    rect.setAttribute("fill", isEndNode ? "#F3EFEA" : "#FAF7F2");
+                    g.appendChild(rect);
+
+                    const titleText = document.createElementNS(svgNS, "text");
+                    titleText.setAttribute("x", coord.x + nodeWidth / 2);
+                    titleText.setAttribute("y", coord.y + 24);
+                    titleText.setAttribute("text-anchor", "middle");
+                    titleText.setAttribute("class", "text-xs font-bold fill-[#2D2B2A]");
+                    
+                    let displayName = node.name;
+                    if (displayName.length > 10) displayName = displayName.substring(0, 9) + "…";
+                    titleText.textContent = displayName;
+                    
+                    const titleEl = document.createElementNS(svgNS, "title");
+                    titleEl.textContent = `${node.id}: ${node.name} (${node.role})\n${node.description}`;
+                    titleText.appendChild(titleEl);
+                    g.appendChild(titleText);
+
+                    const subText = document.createElementNS(svgNS, "text");
+                    subText.setAttribute("x", coord.x + nodeWidth / 2);
+                    subText.setAttribute("y", coord.y + 43);
+                    subText.setAttribute("text-anchor", "middle");
+                    subText.setAttribute("class", "text-[10px] font-medium fill-[#736E69]");
+                    subText.textContent = `[${node.id}] ${node.role}`;
+                    g.appendChild(subText);
+
+                    if (isEndNode) {
+                        const endBadge = document.createElementNS(svgNS, "text");
+                        endBadge.setAttribute("x", coord.x + nodeWidth / 2);
+                        endBadge.setAttribute("y", coord.y + 57);
+                        endBadge.setAttribute("text-anchor", "middle");
+                        endBadge.setAttribute("class", "text-[9px] font-bold fill-[#5A6351]");
+                        endBadge.textContent = "● 結束點";
+                        g.appendChild(endBadge);
+                    }
+
+                    svg.appendChild(g);
+                });
+
+                container.appendChild(svg);
+            }
+
+            // Function to download the workflow diagram as a transparent PNG image
+            downloadTransparentPNG() {
+                const svgElement = document.querySelector("#svg-container svg");
+                if (!svgElement) {
+                    alert("目前尚無可供下載的流程圖。請先建立有效的節點與連線。");
+                    return;
+                }
+
+                // Clone SVG and serialize to string
+                const svgString = new XMLSerializer().serializeToString(svgElement);
+                const svgBlob = new Blob([svgString], { type: "image/svg+xml;charset=utf-8" });
+                const DOMURL = window.URL || window.webkitURL || window;
+                const url = DOMURL.createObjectURL(svgBlob);
+
+                const image = new Image();
+                image.onload = () => {
+                    const viewBox = svgElement.viewBox.baseVal;
+                    const width = viewBox && viewBox.width ? viewBox.width : svgElement.clientWidth || 800;
+                    const height = viewBox && viewBox.height ? viewBox.height : svgElement.clientHeight || 600;
+
+                    const canvas = document.createElement("canvas");
+                    canvas.width = width * 2; // 2x for high resolution
+                    canvas.height = height * 2;
+                    const ctx = canvas.getContext("2d");
+                    ctx.scale(2, 2);
+
+                    // Leave background transparent (no fillRect)
+                    ctx.drawImage(image, 0, 0, width, height);
+
+                    DOMURL.revokeObjectURL(url);
+
+                    const pngUrl = canvas.toDataURL("image/png");
+                    const downloadLink = document.createElement("a");
+                    downloadLink.href = pngUrl;
+                    downloadLink.download = "procurement-workflow.png";
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                };
+                image.src = url;
+            }
+
+            calculateLayoutCoordinates() {
+                const coords = {};
+                const levels = {};
+                
+                const adj = {};
+                const inDegree = {};
+                this.nodes.forEach(n => {
+                    adj[n.id] = [];
+                    inDegree[n.id] = 0;
+                });
+
+                this.edges.forEach(e => {
+                    if (adj[e.from]) {
+                        adj[e.from].push(e.to);
+                    }
+                    if (inDegree[e.to] !== undefined) {
+                        inDegree[e.to]++;
+                    }
+                });
+
+                let queue = this.nodes.filter(n => inDegree[n.id] === 0).map(n => n.id);
+                if (queue.length === 0 && this.nodes.length > 0) {
+                    queue = [this.nodes[0].id];
+                }
+
+                let currentLevel = 0;
+                const visited = new Set();
+
+                while (queue.length > 0) {
+                    let nextQueue = [];
+                    queue.forEach((nodeId) => {
+                        if (!visited.has(nodeId)) {
+                            visited.add(nodeId);
+                            if (!levels[currentLevel]) levels[currentLevel] = [];
+                            levels[currentLevel].push(nodeId);
+
+                            (adj[nodeId] || []).forEach(neighbor => {
+                                inDegree[neighbor]--;
+                                if (inDegree[neighbor] <= 0 && !visited.has(neighbor)) {
+                                    nextQueue.push(neighbor);
+                                }
+                            });
+                        }
+                    });
+
+                    if (nextQueue.length === 0 && visited.size < this.nodes.length) {
+                        const unvisited = this.nodes.find(n => !visited.has(n.id));
+                        if (unvisited) nextQueue.push(unvisited.id);
+                    }
+
+                    queue = nextQueue;
+                    currentLevel++;
+                }
+
+                const startX = 60;
+                const startY = 70;
+                const levelWidth = 220;
+                const nodeHeightGap = 90;
+
+                Object.keys(levels).forEach(lvlStr => {
+                    const lvl = parseInt(lvlStr);
+                    const nodeIdsInLvl = levels[lvl];
+                    nodeIdsInLvl.forEach((nodeId, idx) => {
+                        coords[nodeId] = {
+                            x: startX + lvl * levelWidth,
+                            y: startY + idx * nodeHeightGap
+                        };
+                    });
+                });
+
+                return { coords };
+            }
+
+            render() {
+                const errors = this.validate();
+                const errorContainer = document.getElementById("error-container");
+                const errorList = document.getElementById("error-list");
+
+                if (errors.length > 0) {
+                    errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
+                    errorContainer.classList.remove("hidden");
+                } else {
+                    errorContainer.classList.add("hidden");
+                }
+
+                this.renderNodeTable();
+                this.renderEdgeTable();
+                this.updateEdgeSelectOptions();
+                this.renderSvgFlowchart();
+                this.renderNodeDetail();
+            }
+        }
+
+        // Initialize App on DOMContentLoaded
+        let app;
+        document.addEventListener("DOMContentLoaded", () => {
+            app = new WorkflowApp();
+        });
+    </script>
 </body>
 </html>
